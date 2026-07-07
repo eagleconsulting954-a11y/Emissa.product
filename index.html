@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emissa Master Suite MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="aurora aurora-one"></div>
+  <div class="aurora aurora-two"></div>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      <div><strong>EMISSA</strong><span>Compliance OS</span></div>
+    </div>
+    <button class="mobile-close" id="closeSidebar">×</button>
+    <nav id="nav">
+      <button class="nav-item active" data-page="overview"><span>✦</span> Command Center</button>
+      <button class="nav-item" data-page="core"><span>◎</span> Emissa Core</button>
+      <button class="nav-item" data-page="network"><span>↔</span> Network</button>
+      <button class="nav-item" data-page="epr"><span>▧</span> EPR</button>
+      <button class="nav-item" data-page="cbam"><span>◆</span> CBAM</button>
+      <button class="nav-item" data-page="risk"><span>◒</span> Climate Risk</button>
+      <button class="nav-item" data-page="lca"><span>◇</span> LCA Studio</button>
+      <button class="nav-item" data-page="regulations"><span>⌁</span> Regulatory Map</button>
+      <button class="nav-item" data-page="reports"><span>▣</span> Reports</button>
+      <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+    </nav>
+    <div class="sidebar-card">
+      <p>AI Copilot</p>
+      <strong>12 actions ready</strong>
+      <button class="mini-btn" id="openCopilot">Open assistant</button>
+    </div>
+  </aside>
+
+  <main class="app">
+    <header class="topbar">
+      <button class="hamburger" id="openSidebar">☰</button>
+      <div>
+        <p class="eyebrow">MASTER SUITE DEMO</p>
+        <h1 id="pageTitle">Executive Command Center</h1>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="simulateBtn">Simulate buyer request</button>
+        <button class="primary" id="generateBtn">Generate report</button>
+      </div>
+    </header>
+
+    <section class="page active" id="overview">
+      <div class="hero-grid">
+        <div class="hero-card glass">
+          <div class="hero-copy">
+            <span class="pill">Compliance operating system</span>
+            <h2>Every mandate. Every buyer. One live command layer.</h2>
+            <p>Premium MVP demo for the six-product Emissa suite: Core, Network, EPR, CBAM, Climate Risk, and LCA.</p>
+            <div class="hero-buttons">
+              <button class="primary" data-jump="network">View network moat</button>
+              <button class="ghost" data-jump="regulations">See mandates</button>
+            </div>
+          </div>
+          <div class="orbital">
+            <div class="planet">98%</div>
+            <span class="node n1">Walmart</span><span class="node n2">Apple</span><span class="node n3">CBAM</span><span class="node n4">EPR</span>
+          </div>
+        </div>
+        <div class="metric-stack">
+          <div class="metric"><span>Compliance Score</span><strong id="scoreMetric">98%</strong><em>+8% this month</em></div>
+          <div class="metric"><span>Contracts Protected</span><strong>$2.8M</strong><em>4 buyer renewals</em></div>
+          <div class="metric"><span>Open Obligations</span><strong id="obligationMetric">12</strong><em>3 due this week</em></div>
+        </div>
+      </div>
+
+      <div class="suite-grid">
+        <article class="suite-card" data-jump="core"><b>01</b><h3>Emissa Core</h3><p>Scope 1, 2 & 3 emissions reporting.</p><span>Live · $14–30K ACV</span></article>
+        <article class="suite-card" data-jump="network"><b>02</b><h3>Network</h3><p>Supplier ↔ buyer ESG data exchange.</p><span>Beta · moat layer</span></article>
+        <article class="suite-card" data-jump="epr"><b>03</b><h3>EPR</h3><p>Packaging reporting and fee calculation.</p><span>Build · CPG wedge</span></article>
+        <article class="suite-card" data-jump="cbam"><b>04</b><h3>CBAM</h3><p>Embedded carbon declarations for EU exports.</p><span>Build · exporter wedge</span></article>
+        <article class="suite-card" data-jump="risk"><b>05</b><h3>Climate Risk</h3><p>TCFD / SB 261 physical and transition risk.</p><span>Planned · upmarket</span></article>
+        <article class="suite-card" data-jump="lca"><b>06</b><h3>LCA Studio</h3><p>Product footprints, LCAs, and EPDs.</p><span>Planned · product data</span></article>
+      </div>
+
+      <div class="panel two-col">
+        <div>
+          <h3>5-year ARR curve</h3>
+          <canvas id="arrChart" height="220"></canvas>
+        </div>
+        <div>
+          <h3>Build timeline</h3>
+          <div class="timeline">
+            <div><span>Core</span><i style="width:95%"></i></div>
+            <div><span>Network</span><i style="width:82%"></i></div>
+            <div><span>EPR</span><i style="width:54%"></i></div>
+            <div><span>CBAM</span><i style="width:45%"></i></div>
+            <div><span>Climate Risk</span><i style="width:28%"></i></div>
+            <div><span>LCA</span><i style="width:18%"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="core">
+      <div class="module-layout">
+        <div class="panel">
+          <span class="pill">EMISSA CORE</span><h2>Carbon reporting engine</h2><p>Import QuickBooks, map spend, calculate Scope 1/2/3, and produce buyer-ready packages.</p>
+          <div class="workflow"><button data-action="connect">Connect QuickBooks</button><button data-action="map">Map spend</button><button data-action="calculate">Calculate emissions</button><button data-action="verify">Verify report</button></div>
+          <div class="status-log" id="coreLog"><p>Ready to start workflow.</p></div>
+        </div>
+        <div class="panel"><h3>Scope mix</h3><canvas id="scopeChart" height="250"></canvas></div>
+      </div>
+    </section>
+
+    <section class="page" id="network">
+      <div class="network-wrap panel">
+        <div><span class="pill">NETWORK MOAT</span><h2>Verified data exchange for suppliers and buyers.</h2><p>One-click ESG data sharing turns Emissa from a reporting feature into a defensible network.</p><button class="primary" id="sharePacket">Share data packet</button></div>
+        <div class="network-graph"><span class="buyer b1">Buyer</span><span class="buyer b2">Retailer</span><span class="buyer b3">OEM</span><div class="hub">Emissa<br>Network</div><span class="supplier s1">Supplier A</span><span class="supplier s2">Supplier B</span><span class="supplier s3">Supplier C</span></div>
+      </div>
+      <div class="suite-grid small"><article class="metric"><span>Suppliers</span><strong>4,200</strong><em>+18% MoM</em></article><article class="metric"><span>Buyers</span><strong>230</strong><em>42 active requests</em></article><article class="metric"><span>Data packets</span><strong>18.6K</strong><em>99.2% verified</em></article></div>
+    </section>
+
+    <section class="page" id="epr"><div class="panel"><span class="pill">EPR MODULE</span><h2>Packaging compliance workspace</h2><div class="controls"><select id="stateSelect"><option>California SB 54</option><option>Colorado EPR</option><option>Oregon EPR</option><option>Maine EPR</option></select><button class="primary" id="calcFees">Calculate fees</button></div><div id="feeResult" class="result-card">Select a state and calculate packaging obligations.</div></div></section>
+    <section class="page" id="cbam"><div class="panel"><span class="pill">CBAM MODULE</span><h2>EU export declaration builder</h2><div class="declaration"><input id="shipmentInput" placeholder="Shipment value, e.g. 250000"><select id="materialSelect"><option>Steel</option><option>Aluminum</option><option>Chemicals</option><option>Machinery</option></select><button class="primary" id="buildCbam">Build declaration</button></div><div id="cbamResult" class="result-card">No declaration generated yet.</div></div></section>
+    <section class="page" id="risk"><div class="panel"><span class="pill">CLIMATE RISK</span><h2>Physical and transition risk intelligence</h2><div class="risk-grid"><button data-risk="flood">Flood exposure</button><button data-risk="heat">Heat stress</button><button data-risk="energy">Energy transition</button><button data-risk="supplier">Supplier disruption</button></div><div id="riskResult" class="result-card">Choose a risk model.</div></div></section>
+    <section class="page" id="lca"><div class="panel"><span class="pill">LCA STUDIO</span><h2>Product footprint builder</h2><div class="declaration"><input id="skuInput" placeholder="SKU name"><button class="primary" id="buildLca">Generate product footprint</button></div><div id="lcaResult" class="result-card">No product model generated yet.</div></div></section>
+    <section class="page" id="regulations"><div class="panel"><span class="pill">REGULATORY INTELLIGENCE</span><h2>Mandate map</h2><div class="map-tabs"><button class="active" data-region="us">United States</button><button data-region="eu">European Union</button><button data-region="buyers">Buyer mandates</button></div><div id="regionContent" class="result-card"></div></div></section>
+    <section class="page" id="reports"><div class="panel"><span class="pill">REPORT CENTER</span><h2>Audit-ready report library</h2><div class="report-list" id="reportList"></div></div></section>
+    <section class="page" id="settings"><div class="panel"><span class="pill">ADMIN</span><h2>Demo controls</h2><label>Company name<input id="companyName" value="Apex Components"></label><label>Buyer deadline<input id="deadline" type="date"></label><button class="primary" id="saveSettings">Save settings</button><div id="settingsSaved" class="result-card">Settings ready.</div></div></section>
+  </main>
+
+  <div class="copilot" id="copilot">
+    <div class="copilot-head"><strong>Emissa AI</strong><button id="closeCopilot">×</button></div>
+    <div class="chat" id="chat"><p class="ai">Ask me to find gaps, build a report, or summarize obligations.</p></div>
+    <div class="chat-input"><input id="chatInput" placeholder="Ask Emissa AI..."><button id="sendChat">Send</button></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
