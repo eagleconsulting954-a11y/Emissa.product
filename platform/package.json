@@ -1,15 +1,20 @@
 {
   "name": "emissa-platform",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.12.0",
@@ -23,6 +28,7 @@
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
     "prisma": "^6.12.0",
+    "tsx": "^4.20.0",
     "typescript": "^5.8.0"
   }
 }
