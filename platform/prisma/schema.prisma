@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MANAGER
+  ANALYST
+  AUDITOR
+  SUPPLIER
+  BUYER
+  VIEWER
+}
+
+enum RecordStatus {
+  DRAFT
+  PENDING
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  COMPLETE
+  BLOCKED
+  ARCHIVED
+}
+
+enum ModuleType {
+  CORE
+  NETWORK
+  EPR
+  CBAM
+  CLIMATE_RISK
+  LCA
+  REPORTS
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String?
+  image       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  memberships Membership[]
+  auditEvents AuditEvent[] @relation("ActorAuditEvents")
+}
+
+model Organization {
+  id                 String               @id @default(cuid())
+  name               String
+  slug               String               @unique
+  stripeCustomerId   String?              @unique
+  stripeSubscription String?              @unique
+  onboardingStatus   String               @default("not_started")
+  legacySeatNumber   Int?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  memberships        Membership[]
+  facilities         Facility[]
+  suppliers          Supplier[]
+  obligations        Obligation[]
+  emissionRecords    EmissionRecord[]
+  eprRecords         EprRecord[]
+  cbamShipments      CbamShipment[]
+  climateRisks       ClimateRisk[]
+  lcaProducts        LcaProduct[]
+  reports            Report[]
+  files              EvidenceFile[]
+  auditEvents        AuditEvent[]
+}
+
+model Membership {
+  id             String         @id @default(cuid())
+  userId         String
+  organizationId String
+  role           MembershipRole @default(VIEWER)
+  createdAt      DateTime       @default(now())
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  @@unique([userId, organizationId])
+  @@index([organizationId, role])
+}
+
+model Facility {
+  id             String       @id @default(cuid())
+  organizationId String
+  name           String
+  country        String
+  region         String?
+  latitude       Float?
+  longitude      Float?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  emissionRecords EmissionRecord[]
+  climateRisks   ClimateRisk[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId])
+}
+
+model Supplier {
+  id             String       @id @default(cuid())
+  organizationId String
+  name           String
+  email          String?
+  country        String?
+  status         RecordStatus @default(PENDING)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  cbamShipments  CbamShipment[]
+  lcaProducts    LcaProduct[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, status])
+}
+
+model Obligation {
+  id             String       @id @default(cuid())
+  organizationId String
+  module         ModuleType
+  title          String
+  authority      String?
+  dueDate        DateTime?
+  ownerEmail     String?
+  status         RecordStatus @default(PENDING)
+  description    String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, module, status])
+  @@index([dueDate])
+}
+
+model EmissionRecord {
+  id             String       @id @default(cuid())
+  organizationId String
+  facilityId     String?
+  scope          Int
+  category       String
+  source         String
+  activityValue  Decimal      @db.Decimal(18, 4)
+  activityUnit   String
+  emissionFactor Decimal      @db.Decimal(18, 8)
+  factorSource   String?
+  co2eTonnes     Decimal      @db.Decimal(18, 6)
+  periodStart    DateTime
+  periodEnd      DateTime
+  status         RecordStatus @default(DRAFT)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  facility       Facility?    @relation(fields: [facilityId], references: [id], onDelete: SetNull)
+  evidence       EvidenceFile[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, scope, status])
+  @@index([periodStart, periodEnd])
+}
+
+model EprRecord {
+  id             String       @id @default(cuid())
+  organizationId String
+  jurisdiction   String
+  material       String
+  packagingType  String?
+  weightKg       Decimal      @db.Decimal(18, 3)
+  feeRate        Decimal?     @db.Decimal(18, 6)
+  estimatedFee   Decimal?     @db.Decimal(18, 2)
+  reportingYear  Int
+  status         RecordStatus @default(DRAFT)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  evidence       EvidenceFile[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, jurisdiction, reportingYear])
+}
+
+model CbamShipment {
+  id                String       @id @default(cuid())
+  organizationId    String
+  supplierId        String?
+  shipmentReference String
+  cnCode             String?
+  productName        String
+  originCountry      String
+  destinationCountry String
+  quantityTonnes     Decimal      @db.Decimal(18, 4)
+  directEmissions    Decimal?     @db.Decimal(18, 6)
+  indirectEmissions  Decimal?     @db.Decimal(18, 6)
+  embeddedCo2e       Decimal?     @db.Decimal(18, 6)
+  status             RecordStatus @default(DRAFT)
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  supplier           Supplier?    @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  evidence           EvidenceFile[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  @@unique([organizationId, shipmentReference])
+  @@index([organizationId, status])
+}
+
+model ClimateRisk {
+  id             String       @id @default(cuid())
+  organizationId String
+  facilityId     String?
+  hazard         String
+  scenario       String?
+  timeHorizon    String?
+  likelihood     Int
+  impact         Int
+  riskScore      Int
+  mitigation     String?
+  status         RecordStatus @default(PENDING)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  facility       Facility?    @relation(fields: [facilityId], references: [id], onDelete: SetNull)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, riskScore])
+}
+
+model LcaProduct {
+  id             String       @id @default(cuid())
+  organizationId String
+  supplierId     String?
+  name           String
+  sku            String?
+  functionalUnit String
+  boundary       String
+  totalCo2eKg    Decimal?     @db.Decimal(18, 6)
+  status         RecordStatus @default(DRAFT)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  supplier       Supplier?    @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  stages         LcaStage[]
+  evidence       EvidenceFile[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, status])
+}
+
+model LcaStage {
+  id           String     @id @default(cuid())
+  lcaProductId String
+  stage        String
+  activity     String
+  quantity     Decimal    @db.Decimal(18, 4)
+  unit         String
+  factor       Decimal    @db.Decimal(18, 8)
+  co2eKg       Decimal    @db.Decimal(18, 6)
+  lcaProduct   LcaProduct @relation(fields: [lcaProductId], references: [id], onDelete: Cascade)
+  @@index([lcaProductId, stage])
+}
+
+model Report {
+  id             String       @id @default(cuid())
+  organizationId String
+  type           String
+  title          String
+  periodStart    DateTime?
+  periodEnd      DateTime?
+  status         RecordStatus @default(DRAFT)
+  fileUrl        String?
+  generatedAt    DateTime?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  @@index([organizationId, type, status])
+}
+
+model EvidenceFile {
+  id               String          @id @default(cuid())
+  organizationId   String
+  name             String
+  mimeType         String
+  sizeBytes        Int
+  storageKey       String          @unique
+  checksum         String?
+  emissionRecordId String?
+  eprRecordId      String?
+  cbamShipmentId   String?
+  lcaProductId     String?
+  organization     Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  emissionRecord   EmissionRecord? @relation(fields: [emissionRecordId], references: [id], onDelete: SetNull)
+  eprRecord        EprRecord?      @relation(fields: [eprRecordId], references: [id], onDelete: SetNull)
+  cbamShipment     CbamShipment?   @relation(fields: [cbamShipmentId], references: [id], onDelete: SetNull)
+  lcaProduct       LcaProduct?     @relation(fields: [lcaProductId], references: [id], onDelete: SetNull)
+  createdAt        DateTime        @default(now())
+  @@index([organizationId])
+}
+
+model AuditEvent {
+  id             String        @id @default(cuid())
+  organizationId String
+  actorUserId    String?
+  action         String
+  entityType     String
+  entityId       String?
+  metadata       Json?
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime      @default(now())
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actor          User?         @relation("ActorAuditEvents", fields: [actorUserId], references: [id], onDelete: SetNull)
+  @@index([organizationId, createdAt])
+  @@index([entityType, entityId])
+}
