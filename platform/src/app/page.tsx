@@ -13,6 +13,18 @@ const modules = [
   ['LCA Studio', 'Product footprints, lifecycle stages and supplier comparisons.'],
 ];
 
+const expansion = [
+  ['Utility & EDI Integrations', 'Connect utility, retailer, procurement and fleet systems.'],
+  ['Multi-Facility Rollup', 'Consolidate facility and subsidiary data using GHG Protocol methods.'],
+  ['Grant & Tax-Credit Matcher', 'Match company profiles to maintained incentive-program rules.'],
+  ['Certificate Tracker', 'Manage documents, expirations, owners and renewal workflows.'],
+  ['Auditor Marketplace', 'Request and match vetted auditors and sustainability consultants.'],
+  ['Offset Marketplace', 'Purchase verified offsets and retain a transaction audit trail.'],
+  ['Peer Benchmark Index', 'Compare anonymized cohort performance by NAICS and revenue band.'],
+  ['Deadline Calendar', 'Track buyer programs, filings, renewals and notifications.'],
+  ['Due-Diligence Data Rooms', 'Create secure compliance packets for M&A, lenders and buyers.'],
+];
+
 export default function HomePage() {
   return (
     <div className="shell">
@@ -28,7 +40,13 @@ export default function HomePage() {
         <a className="navItem" href="#modules">🌐 CBAM Reporting</a>
         <a className="navItem" href="#modules">△ Climate Risk</a>
         <a className="navItem" href="#modules">◌ LCA Studio</a>
+        <div className="navGroup">Expansion Suite</div>
+        <a className="navItem" href="/expansion">🔌 Integrations & Rollups</a>
+        <a className="navItem" href="/expansion">📅 Certificates & Deadlines</a>
+        <a className="navItem" href="/expansion">🤝 Marketplaces</a>
+        <a className="navItem" href="/expansion">🔐 Data Rooms & Benchmarks</a>
         <div className="navGroup">Administration</div>
+        <a className="navItem" href="/admin">▦ Admin CRM</a>
         <a className="navItem" href="#billing">$ Billing</a>
         <a className="navItem" href="#settings">⚙ Settings</a>
       </aside>
@@ -36,7 +54,7 @@ export default function HomePage() {
       <main className="main" id="dashboard">
         <header className="topbar">
           <div><h1>Executive Compliance Command Center</h1><p className="muted">Live overview of emissions, obligations, suppliers and financial exposure.</p></div>
-          <div><button className="button">Invite team</button> <button className="button primary">Generate report</button></div>
+          <div><a className="button" href="/expansion">Open expansion suite</a> <button className="button primary">Generate report</button></div>
         </header>
 
         <section className="grid metrics">
@@ -61,6 +79,13 @@ export default function HomePage() {
           <h2>Full suite modules</h2>
           <div className="grid moduleGrid">
             {modules.map(([title, description]) => <article className="card moduleCard" key={title}><span className="status complete">Included</span><h3>{title}</h3><p>{description}</p><button className="button">Open workspace</button></article>)}
+          </div>
+        </section>
+
+        <section id="expansion">
+          <h2>Operations, integrations and marketplace suite</h2>
+          <div className="grid moduleGrid">
+            {expansion.map(([title, description]) => <article className="card moduleCard" key={title}><span className="status complete">Included</span><h3>{title}</h3><p>{description}</p><a className="button" href="/expansion">Open product</a></article>)}
           </div>
         </section>
 
