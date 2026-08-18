@@ -24,7 +24,9 @@ export async function POST(request: NextRequest) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const organizationId = session.metadata?.organizationId;
-      if (organizationId && typeof session.subscription === 'string') {
+      const subscriptionId = typeof session.subscription === 'string' ? session.subscription : session.subscription?.id;
+
+      if (organizationId && subscriptionId) {
         const result = await db.$transaction(async (tx) => {
           // Serialize founding-seat claims so simultaneous Stripe webhooks cannot receive the same seat.
           await tx.$executeRaw`SELECT pg_advisory_xact_lock(502026)`;
@@ -35,7 +37,7 @@ export async function POST(request: NextRequest) {
           if (organization.legacySeatNumber) {
             await tx.organization.update({
               where: { id: organizationId },
-              data: { stripeSubscription: session.subscription, onboardingStatus: 'payment_complete' },
+              data: { stripeSubscription: subscriptionId, onboardingStatus: 'payment_complete' },
             });
             return { seatNumber: organization.legacySeatNumber, alreadyClaimed: true };
           }
@@ -46,7 +48,7 @@ export async function POST(request: NextRequest) {
           await tx.organization.update({
             where: { id: organizationId },
             data: {
-              stripeSubscription: session.subscription,
+              stripeSubscription: subscriptionId,
               onboardingStatus: seatNumber ? 'payment_complete' : 'payment_complete_standard',
               legacySeatNumber: seatNumber,
             },
@@ -60,7 +62,7 @@ export async function POST(request: NextRequest) {
           action: result.seatNumber ? 'billing.founding_subscription_started' : 'billing.standard_subscription_started',
           entityType: 'Organization',
           entityId: organizationId,
-          metadata: { subscriptionId: session.subscription, legacySeatNumber: result.seatNumber },
+          metadata: { subscriptionId, legacySeatNumber: result.seatNumber },
         });
       }
     }
