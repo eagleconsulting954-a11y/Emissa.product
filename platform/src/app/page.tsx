@@ -1,4 +1,5 @@
 import LeadMagnet from '@/components/LeadMagnet';
+import LegalFooter from '@/components/LegalFooter';
 import './marketing.css';
 
 const features = [
@@ -41,6 +42,6 @@ export default function MarketingHome() {
 
     <section className="cta"><p className="eyebrow">Scope 3 gets the data moving. Emissa runs the compliance infrastructure around it.</p><h2>Build one system your team can use for every supplier requirement.</h2><div className="heroActions" style={{justifyContent:'center'}}><a className="button primary" href="/demo">Book a product demo</a><a className="button" href="/login">Customer login</a></div></section>
 
-    <footer className="footer"><span>© 2026 Emissa.tech</span><span>Supplier Compliance Infrastructure • Scope 3 • EPR • CBAM • LCA • Evidence</span></footer>
+    <LegalFooter />
   </main>;
 }
