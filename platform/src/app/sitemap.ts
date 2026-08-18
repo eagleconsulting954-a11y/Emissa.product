@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { newBlogPosts } from '@/lib/newBlogContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
 
@@ -56,7 +57,13 @@ const pages = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return pages.map(({ path, priority, changeFrequency }) => ({
+  const newBlogPages = Object.keys(newBlogPosts).map((slug) => ({
+    path: `/blog/topics/${slug}`,
+    priority: 0.8,
+    changeFrequency: 'monthly' as const,
+  }));
+
+  return [...pages, ...newBlogPages].map(({ path, priority, changeFrequency }) => ({
     url: `${baseUrl}${path}`,
     lastModified: now,
     changeFrequency,
