@@ -6,6 +6,7 @@ const pages = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
   { path: '/demo', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/pricing', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog', priority: 0.85, changeFrequency: 'weekly' as const },
 
   { path: '/solutions/supplier-compliance-infrastructure', priority: 0.95, changeFrequency: 'weekly' as const },
   { path: '/solutions/supplier-due-diligence', priority: 0.9, changeFrequency: 'monthly' as const },
@@ -33,6 +34,22 @@ const pages = [
   { path: '/resources/scope-3-supplier-data-guide', priority: 0.75, changeFrequency: 'monthly' as const },
   { path: '/resources/cbam-supplier-guide', priority: 0.75, changeFrequency: 'monthly' as const },
   { path: '/resources/epr-compliance-guide', priority: 0.75, changeFrequency: 'monthly' as const },
+
+  { path: '/blog/what-is-supplier-compliance-infrastructure', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-compliance-software-vs-esg-software', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-compliance-checklist', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/blog/how-to-manage-buyer-compliance-requests', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-due-diligence-workflow', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-certificate-management-guide', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/scope-3-as-supplier-data-foundation', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/cbam-supplier-data-checklist', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/epr-packaging-compliance-workflow', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/product-carbon-footprint-vs-scope-3', priority: 0.75, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-onboarding-compliance-process', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-questionnaire-management', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-compliance-kpis', priority: 0.75, changeFrequency: 'monthly' as const },
+  { path: '/blog/how-to-build-supplier-compliance-system-of-record', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/blog/supplier-compliance-platform-buyers-guide', priority: 0.8, changeFrequency: 'monthly' as const },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
