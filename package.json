@@ -1,10 +1,11 @@
 {
   "name": "emissa-product-root",
   "private": true,
+  "workspaces": ["platform"],
   "scripts": {
-    "build": "npm --prefix platform run build",
-    "dev": "npm --prefix platform run dev",
-    "start": "npm --prefix platform run start"
+    "build": "npm --workspace platform run build",
+    "dev": "npm --workspace platform run dev",
+    "start": "npm --workspace platform run start"
   },
   "dependencies": {
     "next": "^15.4.0",
