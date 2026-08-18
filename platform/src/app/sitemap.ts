@@ -4,9 +4,12 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'http
 
 const pages = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
+  { path: '/solutions', priority: 0.95, changeFrequency: 'weekly' as const },
+  { path: '/industries', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/resources', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/demo', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/pricing', priority: 0.8, changeFrequency: 'monthly' as const },
-  { path: '/blog', priority: 0.85, changeFrequency: 'weekly' as const },
 
   { path: '/solutions/supplier-compliance-infrastructure', priority: 0.95, changeFrequency: 'weekly' as const },
   { path: '/solutions/supplier-due-diligence', priority: 0.9, changeFrequency: 'monthly' as const },
@@ -17,7 +20,6 @@ const pages = [
   { path: '/solutions/supplier-onboarding-compliance', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/solutions/supplier-questionnaire-management', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/solutions/ecovadis-readiness', priority: 0.8, changeFrequency: 'monthly' as const },
-
   { path: '/solutions/scope-3-supplier-data', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/solutions/epr-compliance', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/solutions/cbam-compliance', priority: 0.85, changeFrequency: 'monthly' as const },
@@ -54,5 +56,10 @@ const pages = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return pages.map(({ path, priority, changeFrequency }) => ({ url: `${baseUrl}${path}`, lastModified: now, changeFrequency, priority }));
+  return pages.map(({ path, priority, changeFrequency }) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  }));
 }
