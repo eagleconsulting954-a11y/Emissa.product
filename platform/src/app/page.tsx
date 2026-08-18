@@ -3,45 +3,85 @@ import LegalFooter from '@/components/LegalFooter';
 import FoundingSpots from '@/components/FoundingSpots';
 import './marketing.css';
 
-const features = [
-  ['◎','Supplier Compliance Infrastructure','One operating layer for supplier evidence, buyer requests, regulatory obligations, deadlines and due diligence.'],
-  ['🌿','Scope 3 Data Foundation','Collect, calculate and reuse supplier, spend, logistics and facility emissions data across downstream compliance workflows.'],
-  ['♻','EPR & Packaging','Track packaging materials, producer obligations, evidence, fees and filing readiness across jurisdictions.'],
-  ['🌐','CBAM & Trade Carbon','Connect shipment, supplier and product data to embedded-carbon workflows for EU importer requests.'],
-  ['◌','Product Footprints & LCA','Build product-level environmental evidence from materials, manufacturing, logistics and end-of-life data.'],
-  ['△','Risk, Certificates & Data Rooms','Manage climate risk, certificates, expiration dates, audit evidence and controlled diligence sharing.'],
+const capabilities = [
+  ['01','Centralize evidence','One trusted source for supplier, facility, product, packaging and transaction evidence.'],
+  ['02','Automate workflows','Run Scope 3, EPR, CBAM, LCA, supplier risk and buyer-request workflows from the same data layer.'],
+  ['03','Prove impact','Turn connected operational data into defensible outputs for buyers, regulators, audits and diligence.'],
+  ['04','Enterprise ready','Secure, scalable infrastructure built for multi-facility suppliers, integrations, approvals and audit history.'],
 ];
 
-const outcomes = [
-  ['Protect revenue','Keep buyer requirements, supplier evidence and contract-critical compliance work from falling through spreadsheets and inboxes.'],
-  ['Reuse the same data','Collect supplier and operational data once, then use it across Scope 3, EPR, CBAM, LCA and buyer requests.'],
-  ['Move faster','Create repeatable workflows with owners, deadlines, evidence and approval history instead of rebuilding every response manually.'],
-];
+const workflows = ['Scope 1, 2 & 3','Supplier evidence','EPR & packaging','CBAM','LCA & product footprints','Climate risk','Certificates','Buyer requests','Due diligence','Data rooms'];
 
 export default function MarketingHome() {
-  return <main className="marketing">
+  return <main className="marketing premiumMarketing">
     <LeadMagnet />
-    <nav className="siteNav">
-      <a className="siteBrand" href="/"><div className="siteLogo">◎</div><div><b>emissa.tech</b><small>Supplier Compliance Infrastructure</small></div></a>
-      <div className="navLinks"><a href="/solutions/supplier-compliance-infrastructure">Solutions</a><a href="/demo">Demo</a><a href="/pricing">Pricing</a><a className="button" href="/login">Log in</a><a className="button primary" href="/demo">Book demo</a></div>
+
+    <nav className="siteNav premiumNav">
+      <a className="siteBrand" href="/" aria-label="Emissa home">
+        <div className="siteLogo premiumLogo"><span></span></div>
+        <div><b>emissa.tech</b><small>Supplier Compliance Infrastructure</small></div>
+      </a>
+      <div className="navLinks">
+        <a href="#platform">Platform</a>
+        <a href="/solutions/supplier-compliance-infrastructure">Solutions</a>
+        <a href="#workflows">Workflows</a>
+        <a href="/pricing">Pricing</a>
+        <a className="button ghostButton" href="/login">Log in</a>
+        <a className="button primary" href="/demo">Book demo <span>→</span></a>
+      </div>
     </nav>
 
-    <section className="hero">
-      <div><p className="eyebrow">Supplier Compliance Infrastructure</p><h1>Turn supplier data into the <span className="gradientText">proof buyers and regulators require.</span></h1><p className="heroCopy">Emissa is the operating infrastructure for supplier compliance. Scope 3 is the data foundation. EPR, CBAM, product footprints, climate risk, certificates, buyer requests and due diligence run on top of the same connected evidence layer.</p><div className="heroActions"><a className="button primary" href="/demo">See the platform</a><a className="button" href="/pricing">View pricing</a></div><div className="heroMeta"><span>✓ Scope 3 foundation</span><span>✓ Full compliance suite</span><span>✓ Two-week implementation</span></div></div>
-      <div className="visualStage"><div className="globe"></div><div className="hud one"><span>Supplier readiness</span><strong>98%</strong></div><div className="hud two"><span>Compliance workflows</span><strong>15+</strong></div><div className="hud three"><span>Founding plan</span><strong>$3,500/mo</strong></div></div>
+    <section className="premiumHero" id="platform">
+      <div className="ambient ambientOne"></div><div className="ambient ambientTwo"></div>
+      <div className="heroContent">
+        <p className="eyebrow">Supplier Compliance Infrastructure</p>
+        <h1>One platform.<br/>Complete <span className="gradientText">compliance.</span></h1>
+        <p className="heroCopy heroLead">Automate supplier compliance. Centralize evidence. Prove impact. Protect revenue.</p>
+        <div className="heroActions">
+          <a className="button primary heroButton" href="/demo">Book a demo <span>→</span></a>
+          <a className="textLink" href="#workflows">See how it works <span>◎</span></a>
+        </div>
+        <div className="trustLine"><span className="trustIcon">✓</span> Built for suppliers serving enterprise buyers and regulated markets</div>
+      </div>
+
+      <div className="orbitalVisual" aria-hidden="true">
+        <div className="orbitGlow"></div>
+        <div className="orbit orbitA"></div>
+        <div className="orbit orbitB"></div>
+        <div className="orbit orbitC"></div>
+        <div className="dataGlobe">
+          <div className="globeGrid"></div>
+          <div className="globeGlow"></div>
+          <span className="pulseDot dotA"></span><span className="pulseDot dotB"></span><span className="pulseDot dotC"></span>
+        </div>
+        <div className="particleField"></div>
+      </div>
     </section>
 
-    <div className="proofBand"><div><strong>1 data layer</strong><span>Supplier + facility + product evidence</span></div><div><strong>15+ workflows</strong><span>Carbon, EPR, CBAM, LCA and more</span></div><div><strong>2 weeks</strong><span>Guided implementation</span></div><div><strong><FoundingSpots compact /></strong><span>Live Stripe-backed founding availability</span></div></div>
+    <section className="metricShell" aria-label="Platform metrics">
+      <div className="metricCard"><div className="metricIcon">◇</div><strong>1</strong><h3>data layer</h3><p>Supplier + facility + product evidence</p></div>
+      <div className="metricCard"><div className="metricIcon purple">⌘</div><strong className="purpleText">15+</strong><h3>workflows</h3><p>Carbon, EPR, CBAM, LCA and more</p></div>
+      <div className="metricCard"><div className="metricIcon">ϟ</div><strong>2</strong><h3>weeks</h3><p>Guided implementation to enterprise value</p></div>
+      <div className="metricCard foundingMetric"><div className="metricIcon purple">50</div><strong><FoundingSpots compact /></strong><h3>founding access</h3><p>Live Stripe-backed availability</p></div>
+    </section>
 
-    <section className="section"><div className="sectionHead"><p className="eyebrow">A new operating layer</p><h2>Supplier compliance should not live in disconnected point tools.</h2><p className="heroCopy">Emissa connects the data, evidence and workflows suppliers need to satisfy enterprise buyers and regulated markets without rebuilding the same response every time.</p></div><div className="grid3">{features.map(([icon,title,description])=><article className="featureCard" key={title}><div className="iconBox">{icon}</div><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+    <section className="section premiumSection" id="workflows">
+      <div className="sectionHead centeredHead"><p className="eyebrow">Built for the future of compliance</p><h2>One connected system instead of a stack of point tools.</h2><p className="heroCopy">Scope 3 is the foundation. Emissa uses the same connected evidence to power the rest of supplier compliance.</p></div>
+      <div className="workflowPills">{workflows.map((item)=><span key={item}>{item}</span>)}</div>
+      <div className="capabilityGrid">{capabilities.map(([num,title,description])=><article className="premiumCard" key={title}><div className="cardTop"><span>{num}</span><div className="cardOrb"></div></div><h3>{title}</h3><p>{description}</p></article>)}</div>
+    </section>
 
-    <section className="section"><div className="sectionHead"><p className="eyebrow">Built around commercial outcomes</p><h2>Compliance infrastructure that helps suppliers stay qualified.</h2></div><div className="grid3">{outcomes.map(([title,description],i)=><article className="demoCard" key={title}><div className="iconBox">0{i+1}</div><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+    <section className="section outcomeSection">
+      <div className="outcomeVisual"><div className="miniStack"><i></i><i></i><i></i></div></div>
+      <div className="outcomeCopy"><p className="eyebrow">Commercial outcome</p><h2>Turn compliance into a competitive advantage.</h2><p className="heroCopy">Move faster on buyer requests, reduce manual work, reuse validated supplier data and create a defensible record of every submission.</p><div className="heroActions"><a className="button primary" href="/demo">Book a demo <span>→</span></a><a className="button ghostButton" href="/pricing">View pricing</a></div></div>
+    </section>
 
-    <section className="section" id="demo"><div className="sectionHead"><p className="eyebrow">How it works</p><h2>One workflow from source data to defensible proof.</h2></div><div className="grid3"><article className="demoCard"><h3>1. Connect</h3><p>Bring in accounting, ERP, utility, supplier, fleet, packaging, shipment and product data.</p></article><article className="demoCard"><h3>2. Validate</h3><p>Classify records, calculate impacts, identify gaps, attach evidence and route approvals.</p></article><article className="demoCard"><h3>3. Deliver</h3><p>Generate buyer-ready, regulator-ready and diligence-ready outputs from the same source data.</p></article></div><div className="heroActions"><a className="button primary" href="/demo">Open interactive demo</a><a className="button" href="/solutions/scope-3-supplier-data">See Scope 3 foundation</a></div></section>
+    <section className="section pricingPreview">
+      <div className="sectionHead"><p className="eyebrow">Founding plan</p><h2>Premium infrastructure. One full-suite subscription.</h2></div>
+      <div className="pricingPreviewCard"><div><span className="priceLabel">Founding customer</span><div className="price">$3,500<span>/mo</span></div><p>Full-suite access plus a two-week implementation for the first 50 companies.</p></div><div className="pricingList">{workflows.slice(0,8).map((item)=><span key={item}>✓ {item}</span>)}</div><div className="pricingAction"><a className="button primary" href="/pricing">See pricing</a><FoundingSpots /></div></div>
+    </section>
 
-    <section className="section" id="pricing"><div className="sectionHead"><p className="eyebrow">Premium full-suite pricing</p><h2>One subscription for the compliance infrastructure layer.</h2><p className="heroCopy">Built for mid-market and upper-mid-market suppliers that need more than a carbon calculator or supplier questionnaire portal.</p></div><div className="pricingWrap"><article className="priceCard"><h3>Everything included</h3><ul><li>Supplier compliance operating layer</li><li>Scope 1, 2 and 3 carbon accounting</li><li>Supplier evidence and buyer requests</li><li>EPR and packaging compliance</li><li>CBAM workflows</li><li>Climate risk</li><li>LCA and product footprints</li><li>Certificates and deadline tracking</li><li>Integrations and multi-facility rollups</li><li>Due-diligence data rooms</li><li>Future Emissa modules</li></ul></article><article className="priceCard featured"><p className="eyebrow">Founding customer</p><div className="price">$3,500</div><h3>per month</h3><p className="heroCopy">Full-suite access plus a two-week implementation. Founding pricing is limited to the first 50 companies. Standard full-suite pricing after the founding cohort is planned at $4,500/month.</p><a className="button primary" href="/pricing">See pricing & onboarding</a><div style={{marginTop:18}}><FoundingSpots /></div></article></div></section>
-
-    <section className="cta"><p className="eyebrow">Scope 3 gets the data moving. Emissa runs the compliance infrastructure around it.</p><h2>Build one system your team can use for every supplier requirement.</h2><div className="heroActions" style={{justifyContent:'center'}}><a className="button primary" href="/demo">Book a product demo</a><a className="button" href="/login">Customer login</a></div></section>
+    <section className="cta premiumCta"><div><p className="eyebrow">Ready to transform supplier compliance?</p><h2>Build one system your team can use for every requirement.</h2></div><div className="heroActions"><a className="button primary" href="/demo">Book a demo <span>→</span></a><a className="textLink" href="/login">Customer login</a></div></section>
 
     <LegalFooter />
   </main>;
