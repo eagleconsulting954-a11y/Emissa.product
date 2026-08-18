@@ -1,99 +1,38 @@
-const obligations = [
-  { title: 'CA SB 253 emissions filing', owner: 'Sustainability', due: 'Jul 28', status: 'pending' },
-  { title: 'CBAM shipment packet EU-8852', owner: 'Trade Compliance', due: 'Jul 18', status: 'blocked' },
-  { title: 'California EPR packaging review', owner: 'Operations', due: 'Aug 05', status: 'complete' },
+import LeadMagnet from '@/components/LeadMagnet';
+import './marketing.css';
+
+const features = [
+  ['🌿','Carbon Accounting','Scope 1, 2 and 3 accounting with evidence, facilities and reporting workflows.'],
+  ['♻','EPR Compliance','Packaging obligations, materials, fees, certificates and filing deadlines.'],
+  ['🌐','CBAM','Shipment-level embedded carbon and importer-ready declaration workflows.'],
+  ['△','Climate Risk','Physical and transition risk across facilities, suppliers and operations.'],
+  ['◌','LCA Studio','Product footprints, lifecycle stages and supplier comparisons.'],
+  ['◎','Supplier Network','Buyer requests, supplier collection, secure sharing and due diligence.'],
 ];
 
-const modules = [
-  ['Emissa Core', 'Scope 1, 2 and 3 accounting, evidence and verification.'],
-  ['Supplier Network', 'Buyer requests, supplier collection and secure data sharing.'],
-  ['EPR Compliance', 'Packaging obligations, material volumes and fee estimates.'],
-  ['CBAM Reporting', 'Shipment-level embedded carbon and EU declaration workflows.'],
-  ['Climate Risk', 'Physical and transition risk across facilities and suppliers.'],
-  ['LCA Studio', 'Product footprints, lifecycle stages and supplier comparisons.'],
-];
+export default function MarketingHome() {
+  return <main className="marketing">
+    <LeadMagnet />
+    <nav className="siteNav">
+      <a className="siteBrand" href="/"><div className="siteLogo">◎</div><div><b>emissa.tech</b><small>Compliance OS</small></div></a>
+      <div className="navLinks"><a href="/demo">Demo</a><a href="/pricing">Pricing</a><a className="button" href="/login">Log in</a><a className="button primary" href="/pricing">Get started</a></div>
+    </nav>
 
-const expansion = [
-  ['Utility & EDI Integrations', 'Connect utility, retailer, procurement and fleet systems.'],
-  ['Multi-Facility Rollup', 'Consolidate facility and subsidiary data using GHG Protocol methods.'],
-  ['Grant & Tax-Credit Matcher', 'Match company profiles to maintained incentive-program rules.'],
-  ['Certificate Tracker', 'Manage documents, expirations, owners and renewal workflows.'],
-  ['Auditor Marketplace', 'Request and match vetted auditors and sustainability consultants.'],
-  ['Offset Marketplace', 'Purchase verified offsets and retain a transaction audit trail.'],
-  ['Peer Benchmark Index', 'Compare anonymized cohort performance by NAICS and revenue band.'],
-  ['Deadline Calendar', 'Track buyer programs, filings, renewals and notifications.'],
-  ['Due-Diligence Data Rooms', 'Create secure compliance packets for M&A, lenders and buyers.'],
-];
+    <section className="hero">
+      <div><p className="eyebrow">The operating system for supplier compliance</p><h1>Turn sustainability compliance into a <span className="gradientText">connected workflow.</span></h1><p className="heroCopy">Emissa brings carbon accounting, EPR, CBAM, climate risk, LCA, supplier data, certificates, deadlines, integrations, marketplaces and secure data rooms into one modern platform.</p><div className="heroActions"><a className="button primary" href="/demo">See the product demo</a><a className="button" href="/pricing">View pricing</a></div><div className="heroMeta"><span>✓ Full suite included</span><span>✓ Two-week onboarding</span><span>✓ Built for mid-market suppliers</span></div></div>
+      <div className="visualStage"><div className="globe"></div><div className="hud one"><span>Compliance readiness</span><strong>98%</strong></div><div className="hud two"><span>Connected modules</span><strong>15+</strong></div><div className="hud three"><span>Founding rate</span><strong>$2,500/mo</strong></div></div>
+    </section>
 
-export default function HomePage() {
-  return (
-    <div className="shell">
-      <aside className="sidebar">
-        <div className="brand"><div className="logo">◎</div><div><b>emissa.tech</b><small>Compliance OS</small></div></div>
-        <div className="navGroup">Workspace</div>
-        <a className="navItem active" href="#dashboard">⌘ Dashboard</a>
-        <a className="navItem" href="#obligations">☷ Obligations</a>
-        <a className="navItem" href="#suppliers">◎ Supplier Network</a>
-        <div className="navGroup">Modules</div>
-        <a className="navItem" href="#modules">🌿 Emissa Core</a>
-        <a className="navItem" href="#modules">♻ EPR Compliance</a>
-        <a className="navItem" href="#modules">🌐 CBAM Reporting</a>
-        <a className="navItem" href="#modules">△ Climate Risk</a>
-        <a className="navItem" href="#modules">◌ LCA Studio</a>
-        <div className="navGroup">Expansion Suite</div>
-        <a className="navItem" href="/expansion">🔌 Integrations & Rollups</a>
-        <a className="navItem" href="/expansion">📅 Certificates & Deadlines</a>
-        <a className="navItem" href="/expansion">🤝 Marketplaces</a>
-        <a className="navItem" href="/expansion">🔐 Data Rooms & Benchmarks</a>
-        <div className="navGroup">Administration</div>
-        <a className="navItem" href="/admin">▦ Admin CRM</a>
-        <a className="navItem" href="#billing">$ Billing</a>
-        <a className="navItem" href="#settings">⚙ Settings</a>
-      </aside>
+    <div className="proofBand"><div><strong>1 platform</strong><span>Corporate + product compliance</span></div><div><strong>15+ modules</strong><span>Core, EPR, CBAM, LCA and more</span></div><div><strong>2 weeks</strong><span>Guided dashboard onboarding</span></div><div><strong>50 spots</strong><span>Founding customer program</span></div></div>
 
-      <main className="main" id="dashboard">
-        <header className="topbar">
-          <div><h1>Executive Compliance Command Center</h1><p className="muted">Live overview of emissions, obligations, suppliers and financial exposure.</p></div>
-          <div><a className="button" href="/expansion">Open expansion suite</a> <button className="button primary">Generate report</button></div>
-        </header>
+    <section className="section"><div className="sectionHead"><p className="eyebrow">Everything connected</p><h2>Replace disconnected spreadsheets and point tools.</h2><p className="heroCopy">One source of truth for emissions, supplier evidence, product data, regulatory obligations and buyer requests.</p></div><div className="grid3">{features.map(([icon,title,description])=><article className="featureCard" key={title}><div className="iconBox">{icon}</div><h3>{title}</h3><p>{description}</p></article>)}</div></section>
 
-        <section className="grid metrics">
-          <article className="card metric"><span>Compliance score</span><strong>98%</strong><p className="muted">12% improvement this quarter</p></article>
-          <article className="card metric"><span>Total emissions</span><strong>10,510</strong><p className="muted">tCO₂e across Scopes 1–3</p></article>
-          <article className="card metric"><span>Open obligations</span><strong>6</strong><p className="muted">2 require action this month</p></article>
-          <article className="card metric"><span>Contracts protected</span><strong>$2.8M</strong><p className="muted">Buyer requirements supported</p></article>
-        </section>
+    <section className="section" id="demo"><div className="sectionHead"><p className="eyebrow">Demo</p><h2>See how Emissa turns compliance into an operating workflow.</h2></div><div className="grid3"><article className="demoCard"><h3>1. Connect</h3><p>Bring in accounting, ERP, utility, supplier, fleet and packaging data.</p></article><article className="demoCard"><h3>2. Validate</h3><p>Organize records, identify gaps, calculate impacts and attach evidence.</p></article><article className="demoCard"><h3>3. Deliver</h3><p>Generate buyer-ready, regulator-ready and diligence-ready outputs from the same data.</p></article></div><div className="heroActions"><a className="button primary" href="/demo">Open interactive demo</a></div></section>
 
-        <section className="grid layout">
-          <article className="card">
-            <h2>Compliance operations</h2>
-            <table className="table" id="obligations">
-              <thead><tr><th>Requirement</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead>
-              <tbody>{obligations.map((item) => <tr key={item.title}><td>{item.title}</td><td>{item.owner}</td><td>{item.due}</td><td><span className={`status ${item.status}`}>{item.status}</span></td></tr>)}</tbody>
-            </table>
-          </article>
-          <article className="card orb"><div className="core">EMISSA AI</div></article>
-        </section>
+    <section className="section" id="pricing"><div className="sectionHead"><p className="eyebrow">Simple pricing</p><h2>One subscription. The complete suite.</h2></div><div className="pricingWrap"><article className="priceCard"><h3>What is included</h3><ul><li>Carbon accounting and Scope 3</li><li>EPR and packaging compliance</li><li>CBAM workflows</li><li>Climate risk</li><li>LCA and product footprints</li><li>Supplier network and data rooms</li><li>Certificates, deadlines and integrations</li><li>Future Emissa modules</li></ul></article><article className="priceCard featured"><p className="eyebrow">Founding customer</p><div className="price">$2,500</div><h3>per month</h3><p className="heroCopy">Full suite access plus a two-week dashboard implementation. Limited to the first 50 founding customers.</p><a className="button primary" href="/pricing">See pricing & onboarding</a></article></div></section>
 
-        <section id="modules">
-          <h2>Full suite modules</h2>
-          <div className="grid moduleGrid">
-            {modules.map(([title, description]) => <article className="card moduleCard" key={title}><span className="status complete">Included</span><h3>{title}</h3><p>{description}</p><button className="button">Open workspace</button></article>)}
-          </div>
-        </section>
+    <section className="cta"><p className="eyebrow">Built for suppliers under pressure to prove compliance</p><h2>Move from reactive reporting to a system your team can run every day.</h2><div className="heroActions" style={{justifyContent:'center'}}><a className="button primary" href="/demo">Book a product demo</a><a className="button" href="/login">Customer login</a></div></section>
 
-        <section id="expansion">
-          <h2>Operations, integrations and marketplace suite</h2>
-          <div className="grid moduleGrid">
-            {expansion.map(([title, description]) => <article className="card moduleCard" key={title}><span className="status complete">Included</span><h3>{title}</h3><p>{description}</p><a className="button" href="/expansion">Open product</a></article>)}
-          </div>
-        </section>
-
-        <section className="grid layout" id="billing">
-          <article className="card"><h2>Founding customer subscription</h2><p className="muted">Full Emissa platform, every current and future module, and a two-week custom dashboard implementation.</p><div className="metric"><span>Legacy rate</span><strong>$2,500/month</strong></div><button className="button primary">Open Stripe checkout</button></article>
-          <article className="card"><h2>Two-week onboarding</h2><div className="list"><div className="listItem"><b>Week 1</b><p className="muted">Company profile, data connection, compliance assessment and dashboard planning.</p></div><div className="listItem"><b>Week 2</b><p className="muted">Custom configuration, module activation, team training and go-live.</p></div></div></article>
-        </section>
-      </main>
-    </div>
-  );
+    <footer className="footer"><span>© 2026 Emissa.tech</span><span>Carbon • EPR • CBAM • Climate Risk • LCA • Supplier Compliance</span></footer>
+  </main>;
 }
