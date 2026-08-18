@@ -37,10 +37,9 @@ export const metadata: Metadata = {
   creator: 'Emissa',
   publisher: 'Emissa',
   category: 'Supplier Compliance Software',
-  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
-    url: '/',
+    url: siteUrl,
     siteName: 'Emissa',
     title: 'Emissa | Supplier Compliance Infrastructure Software',
     description:
@@ -55,7 +54,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 };
 
