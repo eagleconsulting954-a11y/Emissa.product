@@ -1,0 +1,13 @@
+import '../marketing.css';
+
+const demoModules=[
+['Carbon Command Center','Track Scope 1, 2 and 3 records, facilities, evidence, factors and approval status.'],
+['Supplier Network','Collect supplier information and reuse validated evidence across buyer requests.'],
+['EPR Workspace','Track packaging materials, producer obligations, fees, certificates and deadlines.'],
+['CBAM Workspace','Connect shipments to production evidence and embedded-carbon calculations.'],
+['LCA Studio','Model product lifecycle stages and compare materials, suppliers and designs.'],
+['Compliance Operations','Manage deadlines, data rooms, integrations, auditors and due-diligence requests.']];
+
+export default function DemoPage(){
+return <main className="marketing"><nav className="siteNav"><a className="siteBrand" href="/"><div className="siteLogo">◎</div><div><b>emissa.tech</b><small>Compliance OS</small></div></a><div className="navLinks"><a href="/pricing">Pricing</a><a className="button" href="/login">Log in</a><a className="button primary" href="/dashboard">Open product preview</a></div></nav><section className="hero" style={{minHeight:'62vh'}}><div><p className="eyebrow">Product demo</p><h1>See the <span className="gradientText">complete compliance workflow.</span></h1><p className="heroCopy">The demo shows how Emissa connects corporate emissions, product data, packaging, trade requirements, suppliers, evidence and deadlines without turning each requirement into a separate project.</p><div className="heroActions"><a className="button primary" href="/dashboard">Launch interactive preview</a><a className="button" href="/pricing">View founding pricing</a></div></div><div className="visualStage"><div className="globe"></div><div className="hud one"><span>Buyer request</span><strong>Ready</strong></div><div className="hud two"><span>Evidence gaps</span><strong>3</strong></div><div className="hud three"><span>Open modules</span><strong>6</strong></div></div></section><section className="section"><div className="sectionHead"><p className="eyebrow">What the demo covers</p><h2>From source data to a deliverable.</h2></div><div className="grid3">{demoModules.map(([title,description])=><article className="demoCard" key={title}><h3>{title}</h3><p>{description}</p></article>)}</div></section><section className="cta"><p className="eyebrow">Founding customer program</p><h2>Want the full dashboard configured around your company?</h2><div className="heroActions" style={{justifyContent:'center'}}><a className="button primary" href="/pricing">Start onboarding</a><a className="button" href="/">Back to website</a></div></section></main>
+}
