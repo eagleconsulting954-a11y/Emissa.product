@@ -24,6 +24,34 @@ const solutions = {
     intro: 'Centralize buyer requirements, deadlines and approved evidence so supplier teams can answer recurring customer requests faster and more consistently.',
     terms: ['buyer compliance request software', 'supplier questionnaire software', 'customer compliance portal', 'supplier sustainability questionnaire'],
   },
+  'supplier-certificate-management': {
+    title: 'Supplier Certificate Management Software',
+    description: 'Track supplier certificates, owners, expiration dates, approvals and reusable compliance evidence in one connected system.',
+    h1: 'Supplier Certificate Management Without Spreadsheet Chasing',
+    intro: 'Centralize supplier certificates and supporting documents with ownership, expiration tracking, review status and links to the compliance workflows that depend on them.',
+    terms: ['supplier certificate management software', 'supplier certificate tracking', 'supplier document expiration software'],
+  },
+  'supplier-onboarding-compliance': {
+    title: 'Supplier Onboarding Compliance Software',
+    description: 'Standardize supplier onboarding with evidence requests, approvals, risk reviews and compliance readiness workflows.',
+    h1: 'Build Compliance Into Supplier Onboarding From Day One',
+    intro: 'Use structured onboarding workflows to collect required evidence, assign reviews, identify gaps and establish a reusable supplier compliance record before operational dependence grows.',
+    terms: ['supplier onboarding compliance software', 'supplier onboarding platform', 'vendor compliance onboarding'],
+  },
+  'supplier-questionnaire-management': {
+    title: 'Supplier Questionnaire Management Software',
+    description: 'Centralize supplier and buyer questionnaires, reusable answers, evidence, owners and approval workflows.',
+    h1: 'Turn Supplier Questionnaires Into Reusable Compliance Data',
+    intro: 'Store approved answers and supporting evidence once, then reuse them across recurring buyer, sustainability, due-diligence and compliance questionnaires.',
+    terms: ['supplier questionnaire management software', 'supplier questionnaire software', 'vendor questionnaire platform'],
+  },
+  'ecovadis-readiness': {
+    title: 'EcoVadis Readiness Software for Suppliers',
+    description: 'Organize sustainability evidence, ownership, carbon data and supplier compliance records to improve EcoVadis assessment readiness.',
+    h1: 'EcoVadis Readiness Built on Better Compliance Evidence',
+    intro: 'Prepare sustainability evidence, documented methodologies, ownership and reusable supplier records in one system so assessment preparation is not rebuilt from scratch each cycle.',
+    terms: ['EcoVadis readiness software', 'EcoVadis supplier readiness', 'EcoVadis evidence management'],
+  },
   'scope-3-supplier-data': {
     title: 'Scope 3 Supplier Data Management',
     description: 'Collect, calculate, verify and reuse supplier Scope 3 data across buyer reporting, product footprints and broader supplier compliance workflows.',
@@ -76,63 +104,33 @@ const solutions = {
 } as const;
 
 type Slug = keyof typeof solutions;
-
-export function generateStaticParams() {
-  return Object.keys(solutions).map((slug) => ({ slug }));
-}
+export function generateStaticParams() { return Object.keys(solutions).map((slug) => ({ slug })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const solution = solutions[slug as Slug];
   if (!solution) return {};
-  return {
-    title: solution.title,
-    description: solution.description,
-    keywords: [...solution.terms, 'supplier compliance infrastructure', 'supplier compliance software', 'Emissa'],
-    alternates: { canonical: `/solutions/${slug}` },
-    openGraph: { title: `${solution.title} | Emissa`, description: solution.description, url: `/solutions/${slug}`, type: 'website' },
-  };
+  return { title: solution.title, description: solution.description, keywords: [...solution.terms, 'supplier compliance infrastructure', 'supplier compliance software', 'Emissa'], alternates: { canonical: `/solutions/${slug}` }, openGraph: { title: `${solution.title} | Emissa`, description: solution.description, url: `/solutions/${slug}`, type: 'website' } };
 }
 
 export default async function SolutionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const solution = solutions[slug as Slug];
   if (!solution) notFound();
-
   const faq = [
     ['What is Emissa?', 'Emissa is supplier compliance infrastructure that connects evidence, due diligence, buyer requirements, carbon, packaging, trade, product and risk workflows in one operating system.'],
     ['How does Scope 3 fit?', 'Scope 3 is an important supporting data foundation inside Emissa. Supplier, purchasing, logistics and product data can then be reused across adjacent compliance workflows.'],
     ['Who is it for?', 'Emissa is designed for manufacturers, exporters and enterprise suppliers facing recurring buyer, sustainability, product, trade or regulatory data requests.'],
   ];
-
   const schema = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) };
-
-  return (
-    <main className="seoPage">
-      <nav className="seoNav"><a className="seoBrand" href="/">◎ EMISSA</a><div><a href="/solutions/supplier-compliance-infrastructure">Solutions</a><a href="/demo">Demo</a><a href="/pricing">Pricing</a><a href="/login">Login</a></div></nav>
-      <section className="seoHero compact">
-        <span className="seoKicker">Supplier Compliance Infrastructure</span>
-        <h1>{solution.h1}</h1>
-        <p>{solution.intro}</p>
-        <div className="seoActions"><a className="seoPrimary" href="/demo">Book a Demo</a><a className="seoSecondary" href="/pricing">View Pricing</a></div>
-      </section>
-      <section className="seoGrid three">
-        <article className="seoCard"><h2>Connect source data</h2><p>Bring together supplier, facility, product, purchasing, packaging, shipment and evidence records instead of re-keying the same information into separate tools.</p></article>
-        <article className="seoCard"><h2>Run the workflow</h2><p>Assign owners, validate missing information, track deadlines and preserve the evidence behind each calculation, review or submission.</p></article>
-        <article className="seoCard"><h2>Deliver proof</h2><p>Generate reusable buyer-, auditor- and regulator-ready outputs from one controlled supplier compliance data layer.</p></article>
-      </section>
-      <section className="seoSection">
-        <span className="seoKicker">Why Emissa</span>
-        <h2>Scope 3 supports the data graph. Supplier compliance infrastructure defines the platform.</h2>
-        <p>Most teams do not have isolated carbon, packaging, trade, product and due-diligence problems. They have one underlying data problem: the same supplier and operational information must be collected, validated and repackaged for different requirements. Emissa is built around that shared infrastructure.</p>
-      </section>
-      <section className="seoSection">
-        <h2>Explore supplier compliance workflows</h2>
-        <div className="seoActions"><a className="seoSecondary" href="/solutions/supplier-compliance-infrastructure">Supplier compliance infrastructure</a><a className="seoSecondary" href="/solutions/supplier-due-diligence">Supplier due diligence</a><a className="seoSecondary" href="/solutions/buyer-compliance-requests">Buyer compliance requests</a><a className="seoSecondary" href="/solutions/supplier-evidence-management">Supplier evidence</a><a className="seoSecondary" href="/solutions/scope-3-supplier-data">Scope 3 supplier data</a><a className="seoSecondary" href="/solutions/cbam-compliance">CBAM</a><a className="seoSecondary" href="/solutions/epr-compliance">EPR</a></div>
-      </section>
-      <section className="seoSection"><h2>Frequently asked questions</h2><div className="seoFaq">{faq.map(([q,a]) => <article key={q}><h3>{q}</h3><p>{a}</p></article>)}</div></section>
-      <section className="seoCta"><h2>Turn supplier compliance into an operating system.</h2><p>Start with the requirement creating urgency today. Expand across the full Emissa suite as the same data becomes useful elsewhere.</p><a className="seoPrimary" href="/demo">See Emissa in Action</a></section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-    </main>
-  );
+  return <main className="seoPage">
+    <nav className="seoNav"><a className="seoBrand" href="/">◎ EMISSA</a><div><a href="/solutions/supplier-compliance-infrastructure">Solutions</a><a href="/demo">Demo</a><a href="/pricing">Pricing</a><a href="/login">Login</a></div></nav>
+    <section className="seoHero compact"><span className="seoKicker">Supplier Compliance Infrastructure</span><h1>{solution.h1}</h1><p>{solution.intro}</p><div className="seoActions"><a className="seoPrimary" href="/demo">Book a Demo</a><a className="seoSecondary" href="/pricing">View Pricing</a></div></section>
+    <section className="seoGrid three"><article className="seoCard"><h2>Connect source data</h2><p>Bring together supplier, facility, product, purchasing, packaging, shipment and evidence records instead of re-keying the same information into separate tools.</p></article><article className="seoCard"><h2>Run the workflow</h2><p>Assign owners, validate missing information, track deadlines and preserve the evidence behind each calculation, review or submission.</p></article><article className="seoCard"><h2>Deliver proof</h2><p>Generate reusable buyer-, auditor- and regulator-ready outputs from one controlled supplier compliance data layer.</p></article></section>
+    <section className="seoSection"><span className="seoKicker">Why Emissa</span><h2>Scope 3 supports the data graph. Supplier compliance infrastructure defines the platform.</h2><p>Most teams do not have isolated carbon, packaging, trade, product and due-diligence problems. They have one underlying data problem: the same supplier and operational information must be collected, validated and repackaged for different requirements. Emissa is built around that shared infrastructure.</p></section>
+    <section className="seoSection"><h2>Explore supplier compliance workflows</h2><div className="seoActions"><a className="seoSecondary" href="/solutions/supplier-compliance-infrastructure">Supplier compliance infrastructure</a><a className="seoSecondary" href="/solutions/supplier-due-diligence">Supplier due diligence</a><a className="seoSecondary" href="/solutions/buyer-compliance-requests">Buyer requests</a><a className="seoSecondary" href="/solutions/supplier-certificate-management">Certificates</a><a className="seoSecondary" href="/solutions/supplier-onboarding-compliance">Onboarding</a><a className="seoSecondary" href="/solutions/supplier-questionnaire-management">Questionnaires</a><a className="seoSecondary" href="/solutions/supplier-evidence-management">Evidence</a><a className="seoSecondary" href="/solutions/scope-3-supplier-data">Scope 3</a><a className="seoSecondary" href="/solutions/cbam-compliance">CBAM</a><a className="seoSecondary" href="/solutions/epr-compliance">EPR</a></div></section>
+    <section className="seoSection"><h2>Frequently asked questions</h2><div className="seoFaq">{faq.map(([q,a]) => <article key={q}><h3>{q}</h3><p>{a}</p></article>)}</div></section>
+    <section className="seoCta"><h2>Turn supplier compliance into an operating system.</h2><p>Start with the requirement creating urgency today. Expand across the full Emissa suite as the same data becomes useful elsewhere.</p><a className="seoPrimary" href="/demo">See Emissa in Action</a></section>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+  </main>;
 }
