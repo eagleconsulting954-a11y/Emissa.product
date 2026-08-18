@@ -3,12 +3,14 @@ import Stripe from 'stripe';
 import { db } from '@/lib/db';
 import { checkoutSchema } from '@/lib/validation';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
-
 export async function POST(request: NextRequest) {
-  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PRICE_ID) {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  const priceId = process.env.STRIPE_PRICE_ID;
+  if (!secretKey || !priceId) {
     return NextResponse.json({ error: 'Stripe is not configured.' }, { status: 503 });
   }
+
+  const stripe = new Stripe(secretKey);
 
   try {
     const payload = checkoutSchema.parse(await request.json());
@@ -26,16 +28,15 @@ export async function POST(request: NextRequest) {
       await db.organization.update({ where: { id: organization.id }, data: { stripeCustomerId: customerId } });
     }
 
+    const baseUrl = process.env.APP_URL || 'https://emissa.tech';
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       customer: customerId,
-      line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
-      success_url: `${process.env.APP_URL}/dashboard?checkout=success`,
-      cancel_url: `${process.env.APP_URL}/billing?checkout=cancelled`,
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${baseUrl}/dashboard?checkout=success`,
+      cancel_url: `${baseUrl}/pricing?checkout=cancelled`,
       allow_promotion_codes: false,
-      subscription_data: {
-        metadata: { organizationId: organization.id, program: 'founding-customer' },
-      },
+      subscription_data: { metadata: { organizationId: organization.id, program: 'founding-customer' } },
       metadata: { organizationId: organization.id },
     });
 
