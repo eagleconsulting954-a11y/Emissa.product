@@ -3,6 +3,8 @@ import Stripe from 'stripe';
 import { db } from '@/lib/db';
 import { writeAuditEvent } from '@/lib/audit';
 
+const TOTAL_FOUNDING_SPOTS = 50;
+
 export async function POST(request: NextRequest) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -23,22 +25,42 @@ export async function POST(request: NextRequest) {
       const session = event.data.object;
       const organizationId = session.metadata?.organizationId;
       if (organizationId && typeof session.subscription === 'string') {
-        const claimedCount = await db.organization.count({ where: { legacySeatNumber: { not: null } } });
-        const seatNumber = Math.min(claimedCount + 1, 50);
-        await db.organization.update({
-          where: { id: organizationId },
-          data: {
-            stripeSubscription: session.subscription,
-            onboardingStatus: 'payment_complete',
-            legacySeatNumber: seatNumber,
-          },
+        const result = await db.$transaction(async (tx) => {
+          // Serialize founding-seat claims so simultaneous Stripe webhooks cannot receive the same seat.
+          await tx.$executeRaw`SELECT pg_advisory_xact_lock(502026)`;
+
+          const organization = await tx.organization.findUnique({ where: { id: organizationId } });
+          if (!organization) throw new Error('Organization not found for Stripe checkout.');
+
+          if (organization.legacySeatNumber) {
+            await tx.organization.update({
+              where: { id: organizationId },
+              data: { stripeSubscription: session.subscription, onboardingStatus: 'payment_complete' },
+            });
+            return { seatNumber: organization.legacySeatNumber, alreadyClaimed: true };
+          }
+
+          const claimedCount = await tx.organization.count({ where: { legacySeatNumber: { not: null } } });
+          const seatNumber = claimedCount < TOTAL_FOUNDING_SPOTS ? claimedCount + 1 : null;
+
+          await tx.organization.update({
+            where: { id: organizationId },
+            data: {
+              stripeSubscription: session.subscription,
+              onboardingStatus: seatNumber ? 'payment_complete' : 'payment_complete_standard',
+              legacySeatNumber: seatNumber,
+            },
+          });
+
+          return { seatNumber, alreadyClaimed: false };
         });
+
         await writeAuditEvent({
           organizationId,
-          action: 'billing.subscription_started',
+          action: result.seatNumber ? 'billing.founding_subscription_started' : 'billing.standard_subscription_started',
           entityType: 'Organization',
           entityId: organizationId,
-          metadata: { subscriptionId: session.subscription, legacySeatNumber: seatNumber },
+          metadata: { subscriptionId: session.subscription, legacySeatNumber: result.seatNumber },
         });
       }
     }
@@ -47,6 +69,7 @@ export async function POST(request: NextRequest) {
       const subscription = event.data.object;
       const organizationId = subscription.metadata.organizationId;
       if (organizationId) {
+        // A founding seat remains historically claimed after cancellation; it is not put back into the first-50 pool.
         await db.organization.update({
           where: { id: organizationId },
           data: { stripeSubscription: null, onboardingStatus: 'subscription_cancelled' },
