@@ -1,0 +1,14 @@
+{
+  "name": "emissa-product-root",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix platform run build",
+    "dev": "npm --prefix platform run dev",
+    "start": "npm --prefix platform run start"
+  },
+  "dependencies": {
+    "next": "^15.4.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
