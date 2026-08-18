@@ -3,19 +3,21 @@ import Stripe from 'stripe';
 import { db } from '@/lib/db';
 import { writeAuditEvent } from '@/lib/audit';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
-
 export async function POST(request: NextRequest) {
-  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!secretKey || !webhookSecret) {
     return NextResponse.json({ error: 'Stripe webhook is not configured.' }, { status: 503 });
   }
 
   const signature = request.headers.get('stripe-signature');
   if (!signature) return NextResponse.json({ error: 'Missing Stripe signature.' }, { status: 400 });
 
+  const stripe = new Stripe(secretKey);
+
   try {
     const body = await request.text();
-    const event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET);
+    const event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
