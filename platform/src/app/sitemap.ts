@@ -56,7 +56,6 @@ const pages = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   const newBlogPages = Object.keys(newBlogPosts).map((slug) => ({
     path: `/blog/topics/${slug}`,
     priority: 0.8,
@@ -65,7 +64,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...pages, ...newBlogPages].map(({ path, priority, changeFrequency }) => ({
     url: `${baseUrl}${path}`,
-    lastModified: now,
     changeFrequency,
     priority,
   }));
