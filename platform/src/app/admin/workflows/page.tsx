@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import AdminProductShell from '@/components/AdminProductShell';
 import '../compliance/admin-compliance.css';
+import '../admin-forms.css';
 
 export const dynamic='force-dynamic';
 
@@ -58,20 +59,7 @@ export default async function WorkflowStudio(){
       <article className="ccPanel"><div className="ccPanelHead"><div><span>Workflow distribution</span><small>Current production state</small></div></div><div className="ccRiskRows"><span><b>Open</b><i><em style={{width:`${Math.min(100,active.length*8)}%`}}/></i><strong>{active.length}</strong></span><span><b>Review</b><i><em style={{width:`${Math.min(100,review.length*12)}%`}}/></i><strong>{review.length}</strong></span><span><b>Blocked</b><i><em style={{width:`${Math.min(100,blocked.length*15)}%`}}/></i><strong>{blocked.length}</strong></span><span><b>Done</b><i><em style={{width:`${Math.min(100,complete.length*7)}%`}}/></i><strong>{complete.length}</strong></span></div></article>
       <article className="ccPanel"><div className="ccPanelHead"><div><span>Quick templates</span><small>Reusable compliance patterns</small></div></div><div className="ccQuick"><a href="#create-workflow">Supplier evidence request</a><a href="#create-workflow">CBAM data collection</a><a href="#create-workflow">Certificate renewal</a><a href="#create-workflow">Buyer questionnaire review</a></div></article>
     </section>
-
-    <section className="ccPanel" id="create-workflow" style={{marginTop:10}}><div className="ccPanelHead"><div><span>Create production workflow</span><small>Writes directly to the Emissa compliance database</small></div></div>
-      <form action={createWorkflow} className="ccFormGrid">
-        <label><span>Organization</span><select name="organizationId" required><option value="">Select customer</option>{organizations.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
-        <label><span>Workflow title</span><input name="title" required placeholder="Supplier certificate renewal"/></label>
-        <label><span>Module</span><select name="module" defaultValue="CORE">{Object.values(ModuleType).map(m=><option key={m}>{m}</option>)}</select></label>
-        <label><span>Owner email</span><input name="ownerEmail" type="email" placeholder="compliance@company.com"/></label>
-        <label><span>Authority / buyer</span><input name="authority" placeholder="EU Commission, Buyer X, Internal"/></label>
-        <label><span>Due date</span><input name="dueDate" type="date"/></label>
-        <label className="wide"><span>Description</span><textarea name="description" rows={3} placeholder="Required evidence, review criteria and expected output"/></label>
-        <div className="wide"><button className="ccGoldButton" type="submit">Create workflow</button></div>
-      </form>
-    </section>
-
+    <section className="ccPanel" id="create-workflow" style={{marginTop:10}}><div className="ccPanelHead"><div><span>Create production workflow</span><small>Writes directly to the Emissa compliance database</small></div></div><form action={createWorkflow} className="ccFormGrid"><label><span>Organization</span><select name="organizationId" required><option value="">Select customer</option>{organizations.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label><label><span>Workflow title</span><input name="title" required placeholder="Supplier certificate renewal"/></label><label><span>Module</span><select name="module" defaultValue="CORE">{Object.values(ModuleType).map(m=><option key={m}>{m}</option>)}</select></label><label><span>Owner email</span><input name="ownerEmail" type="email" placeholder="compliance@company.com"/></label><label><span>Authority / buyer</span><input name="authority" placeholder="EU Commission, Buyer X, Internal"/></label><label><span>Due date</span><input name="dueDate" type="date"/></label><label className="wide"><span>Description</span><textarea name="description" rows={3} placeholder="Required evidence, review criteria and expected output"/></label><div className="wide"><button className="ccGoldButton" type="submit">Create workflow</button></div></form></section>
     <section className="ccPanel" style={{marginTop:10}}><div className="ccPanelHead"><div><span>Production workflows</span><small>No demo records</small></div></div>{live.length?<div className="ccTableWrap"><table className="ccTable"><thead><tr><th>Workflow</th><th>Organization</th><th>Module</th><th>Status</th><th>Owner</th><th>Due</th><th>Action</th></tr></thead><tbody>{live.map(o=><tr key={o.id}><td><strong>{o.title}</strong>{o.description&&<small className="ccCellSub">{o.description}</small>}</td><td>{o.organization.name}</td><td>{o.module}</td><td><span className="ccBadge">{o.status}</span></td><td>{o.ownerEmail||'Unassigned'}</td><td>{o.dueDate?o.dueDate.toLocaleDateString():'—'}</td><td><form action={updateWorkflowStatus} className="ccInlineForm"><input type="hidden" name="id" value={o.id}/><select name="status" defaultValue={o.status}>{Object.values(RecordStatus).map(s=><option key={s}>{s}</option>)}</select><button type="submit">Update</button></form></td></tr>)}</tbody></table></div>:<div className="ccEmptySmall">No production workflows yet.</div>}</section>
   </AdminProductShell>;
 }
