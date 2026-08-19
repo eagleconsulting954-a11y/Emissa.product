@@ -6,7 +6,7 @@ import './executive-pages.css';
 import './public-template-v3.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
-const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-538670958';
+const gaMeasurementId = 'G-538670958';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
