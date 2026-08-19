@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './executive-theme.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
 
