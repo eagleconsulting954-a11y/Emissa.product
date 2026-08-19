@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './executive-theme.css';
 import './executive-pages.css';
+import './public-template-v3.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
 
