@@ -1,58 +1,27 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { recommendedRequirements, riskBand, supplierRiskScore } from '@/lib/supplierCompliance';
+import AdminProductShell from '@/components/AdminProductShell';
 import '../../compliance/admin-compliance.css';
+import '../../product-template.css';
 
 export const dynamic = 'force-dynamic';
 
 export default async function SupplierProfile({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supplier = await db.supplier.findUnique({
-    where: { id },
-    include: {
-      organization: { select: { name: true, slug: true, onboardingStatus: true, stripeSubscription: true } },
-      cbamShipments: { orderBy: { updatedAt: 'desc' } },
-      lcaProducts: { orderBy: { updatedAt: 'desc' } },
-    },
-  });
-
+  const supplier = await db.supplier.findUnique({where:{id},include:{organization:{select:{name:true,slug:true,onboardingStatus:true,stripeSubscription:true}},cbamShipments:{orderBy:{updatedAt:'desc'}},lcaProducts:{orderBy:{updatedAt:'desc'}}}});
   if (!supplier || supplier.organization.slug === 'emissa-demo') notFound();
-
-  const score = supplierRiskScore(supplier);
-  const band = riskBand(score);
-  const requirements = recommendedRequirements(supplier);
-
-  return <main className="ccPage"><div className="ccShell">
-    <header className="ccTop"><div><p>Supplier 360 Profile</p><h1>{supplier.name}</h1><p>{supplier.organization.name} · {supplier.country || 'Country missing'}</p></div><nav className="ccNav"><a href="/admin/suppliers">All Suppliers</a><a href="/admin/compliance">Command Center</a></nav></header>
-
-    <section className="ccGrid">
-      <article className="ccCard"><small>Compliance status</small><strong style={{fontSize:24}}>{supplier.status}</strong><p>Current supplier record status.</p></article>
-      <article className="ccCard"><small>Risk score</small><strong>{score}</strong><p><span className={`ccRisk ${band.toLowerCase()}`}>{band} risk</span></p></article>
-      <article className="ccCard"><small>CBAM shipments</small><strong>{supplier.cbamShipments.length}</strong><p>Shipment records connected to this supplier.</p></article>
-      <article className="ccCard"><small>Product footprints</small><strong>{supplier.lcaProducts.length}</strong><p>LCA / PCF product records connected to this supplier.</p></article>
-    </section>
-
-    <section className="ccSection"><h2>Supplier identity</h2><div className="ccGrid">
-      <article className="ccCard"><small>Primary contact</small><strong style={{fontSize:20}}>{supplier.email || 'Missing'}</strong><p>Compliance contact used for requests and follow-up.</p></article>
-      <article className="ccCard"><small>Country</small><strong style={{fontSize:20}}>{supplier.country || 'Missing'}</strong><p>Operating jurisdiction for requirement mapping.</p></article>
-      <article className="ccCard"><small>Customer onboarding</small><strong style={{fontSize:20}}>{supplier.organization.onboardingStatus}</strong><p>Organization-level onboarding state.</p></article>
-      <article className="ccCard"><small>Billing</small><strong style={{fontSize:20}}>{supplier.organization.stripeSubscription ? 'Active' : 'Not active'}</strong><p>Live Stripe subscription state.</p></article>
-    </div></section>
-
-    <section className="ccSection"><h2>Compliance requirement engine</h2><div className="ccGrid">
-      {requirements.map((requirement) => <article className="ccCard" key={requirement}><small>Required evidence</small><p style={{color:'#dce7f1',marginTop:10}}>{requirement}</p></article>)}
-    </div></section>
-
-    <section className="ccSection"><h2>CBAM activity</h2>
-      {supplier.cbamShipments.length ? <div className="ccTableWrap"><table className="ccTable"><thead><tr><th>Shipment</th><th>Product</th><th>CN code</th><th>Origin</th><th>Status</th><th>Embedded CO₂e</th></tr></thead><tbody>
-        {supplier.cbamShipments.map((row) => <tr key={row.id}><td>{row.shipmentReference}</td><td>{row.productName}</td><td>{row.cnCode || 'Missing'}</td><td>{row.originCountry}</td><td><span className="ccBadge">{row.status}</span></td><td>{row.embeddedCo2e ? String(row.embeddedCo2e) : 'Missing'}</td></tr>)}
-      </tbody></table></div> : <div className="ccEmpty">No CBAM records are connected to this supplier.</div>}
-    </section>
-
-    <section className="ccSection"><h2>Product carbon / LCA records</h2>
-      {supplier.lcaProducts.length ? <div className="ccTableWrap"><table className="ccTable"><thead><tr><th>Product</th><th>SKU</th><th>Boundary</th><th>Status</th><th>CO₂e kg</th><th>Updated</th></tr></thead><tbody>
-        {supplier.lcaProducts.map((row) => <tr key={row.id}><td>{row.name}</td><td>{row.sku || 'Missing'}</td><td>{row.boundary}</td><td><span className="ccBadge">{row.status}</span></td><td>{row.totalCo2eKg ? String(row.totalCo2eKg) : 'Missing'}</td><td>{row.updatedAt.toLocaleDateString()}</td></tr>)}
-      </tbody></table></div> : <div className="ccEmpty">No product carbon or LCA records are connected to this supplier.</div>}
-    </section>
-  </div></main>;
+  const score=supplierRiskScore(supplier), band=riskBand(score), requirements=recommendedRequirements(supplier);
+  const validCbam=supplier.cbamShipments.filter(r=>r.status==='APPROVED'||r.status==='COMPLETE').length;
+  const validProducts=supplier.lcaProducts.filter(r=>r.status==='APPROVED'||r.status==='COMPLETE').length;
+  return <AdminProductShell title={supplier.name} eyebrow="Supplier 360 · Complete compliance profile" active="/admin/suppliers" actions={<><a href="/admin/suppliers">Back to suppliers</a><a href="/admin/workflows">Create workflow</a></>}>
+    <section className="profileHero"><div className="scoreRing"><strong>{score}</strong></div><div><h2>{supplier.name}</h2><p>{supplier.organization.name} · {supplier.country||'Country missing'} · Supplier ID {supplier.id.slice(0,10)}</p><div className="profilePills"><span className="ccBadge">{supplier.status}</span><span className={`ccRisk ${band.toLowerCase()}`}>{band} risk</span><span className="ccBadge">{supplier.cbamShipments.length} CBAM</span><span className="ccBadge">{supplier.lcaProducts.length} products</span></div></div><div className="ccQuick"><a href={`mailto:${supplier.email||''}`}>Contact supplier</a><a href="/admin/evidence">Open evidence vault</a></div></section>
+    <div className="profileTabs"><span>Overview</span><span>Compliance</span><span>Certificates</span><span>Facilities</span><span>Products</span><span>Activity</span></div>
+    <section className="ccMetricGrid"><article><span>Compliance score</span><strong>{Math.max(0,100-score)}</strong><small>Derived from current supplier risk</small></article><article><span>CBAM complete</span><strong>{validCbam}</strong><small>Approved / complete shipments</small></article><article><span>Products complete</span><strong>{validProducts}</strong><small>Approved / complete LCA records</small></article><article><span>Open requirements</span><strong>{requirements.length}</strong><small>Recommended evidence items</small></article></section>
+    <section className="ccDashboardGrid"><article className="ccPanel ccHealth"><div className="ccPanelHead"><div><span>Company information</span><small>Core supplier identity and account context</small></div></div><div className="regCards"><div><span>Primary contact</span><strong style={{fontSize:12}}>{supplier.email||'Missing'}</strong><small>Compliance contact</small></div><div><span>Country</span><strong style={{fontSize:12}}>{supplier.country||'Missing'}</strong><small>Requirement jurisdiction</small></div><div><span>Customer onboarding</span><strong style={{fontSize:12}}>{supplier.organization.onboardingStatus}</strong><small>Workspace status</small></div><div><span>Billing</span><strong style={{fontSize:12}}>{supplier.organization.stripeSubscription?'Active':'Not active'}</strong><small>Stripe subscription</small></div></div></article>
+      <article className="ccPanel"><div className="ccPanelHead"><div><span>Compliance summary</span><small>Connected production modules</small></div></div><div className="ccRiskRows"><span><b>Supplier profile</b><i><em style={{width:supplier.email&&supplier.country?'100%':'55%'}}/></i><strong>{supplier.email&&supplier.country?'Ready':'Gap'}</strong></span><span><b>CBAM</b><i><em style={{width:supplier.cbamShipments.length?`${Math.max(20,Math.round(validCbam/supplier.cbamShipments.length*100))}%`:'0%'}}/></i><strong>{supplier.cbamShipments.length}</strong></span><span><b>Products</b><i><em style={{width:supplier.lcaProducts.length?`${Math.max(20,Math.round(validProducts/supplier.lcaProducts.length*100))}%`:'0%'}}/></i><strong>{supplier.lcaProducts.length}</strong></span></div></article>
+      <article className="ccPanel"><div className="ccPanelHead"><div><span>Open corrective actions</span><small>Requirement engine recommendations</small></div></div><div className="ccCompactTable">{requirements.slice(0,6).map((r,i)=><div key={r}><div><b>{r}</b><small>Compliance requirement</small></div><em>{i<2?'High':'Medium'}</em></div>)}</div></article></section>
+    <section className="ccPanel" style={{marginTop:10}}><div className="ccPanelHead"><div><span>CBAM activity</span><small>Shipment and embedded-carbon records</small></div></div>{supplier.cbamShipments.length?<div className="ccTableWrap"><table className="ccTable"><thead><tr><th>Shipment</th><th>Product</th><th>CN code</th><th>Origin</th><th>Status</th><th>Embedded CO₂e</th></tr></thead><tbody>{supplier.cbamShipments.map(row=><tr key={row.id}><td>{row.shipmentReference}</td><td>{row.productName}</td><td>{row.cnCode||'Missing'}</td><td>{row.originCountry}</td><td><span className="ccBadge">{row.status}</span></td><td>{row.embeddedCo2e?String(row.embeddedCo2e):'Missing'}</td></tr>)}</tbody></table></div>:<div className="ccEmptySmall">No CBAM records connected to this supplier.</div>}</section>
+    <section className="ccPanel" style={{marginTop:10}}><div className="ccPanelHead"><div><span>Product carbon / LCA</span><small>Product-level compliance evidence</small></div></div>{supplier.lcaProducts.length?<div className="ccTableWrap"><table className="ccTable"><thead><tr><th>Product</th><th>SKU</th><th>Boundary</th><th>Status</th><th>CO₂e kg</th><th>Updated</th></tr></thead><tbody>{supplier.lcaProducts.map(row=><tr key={row.id}><td>{row.name}</td><td>{row.sku||'Missing'}</td><td>{row.boundary}</td><td><span className="ccBadge">{row.status}</span></td><td>{row.totalCo2eKg?String(row.totalCo2eKg):'Missing'}</td><td>{row.updatedAt.toLocaleDateString()}</td></tr>)}</tbody></table></div>:<div className="ccEmptySmall">No product carbon or LCA records connected to this supplier.</div>}</section>
+  </AdminProductShell>;
 }
