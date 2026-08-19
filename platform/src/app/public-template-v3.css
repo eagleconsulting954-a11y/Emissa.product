@@ -1,0 +1,40 @@
+/* Public template v3: hard override so every footer-linked public route matches the executive Emissa template. */
+body .seoPage,body .marketing,body .legalPage{background:radial-gradient(circle at 8% 94%,rgba(17,107,70,.12),transparent 26%),radial-gradient(circle at 88% 8%,rgba(213,168,74,.07),transparent 24%),#03090c!important;color:#eef3ef!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body .seoPage{min-height:100vh!important;padding-bottom:64px!important}
+body .seoNav,body .siteNav{background:rgba(5,12,15,.97)!important;border-bottom:1px solid #172326!important;box-shadow:none!important;backdrop-filter:blur(18px)!important}
+body .seoNav a,body .siteNav a{color:#8e9b9e!important;text-decoration:none!important}
+body .seoNav a:hover,body .siteNav a:hover{color:#f0c66c!important}
+body .seoBrand{font-size:0!important;color:transparent!important;display:flex!important;align-items:center!important;gap:11px!important}
+body .seoBrand:before{content:""!important;width:29px!important;height:33px!important;display:block!important;background:linear-gradient(135deg,#fff1b2 0,#d5a84a 45%,#8b5d0d 100%)!important;clip-path:polygon(50% 0,100% 100%,75% 100%,50% 48%,25% 100%,0 100%)!important}
+body .seoBrand:after{content:"EMISSA"!important;font:600 15px Georgia,"Times New Roman",serif!important;letter-spacing:.1em!important;color:#e9bd5a!important}
+body .seoHero{max-width:1180px!important;margin:0 auto!important;padding:76px 24px 48px!important;text-align:left!important;background:transparent!important}
+body .seoKicker{color:#f0c66c!important;font-size:9px!important;letter-spacing:.19em!important;text-transform:uppercase!important;font-weight:850!important}
+body .seoHero h1{max-width:900px!important;margin:14px 0 18px!important;font-size:clamp(46px,6vw,82px)!important;line-height:.98!important;letter-spacing:-.045em!important;font-weight:650!important;color:#eef3ef!important;background:none!important;-webkit-background-clip:initial!important;-webkit-text-fill-color:#eef3ef!important;text-align:left!important}
+body .seoHero p{max-width:760px!important;margin:0!important;color:#8f9da0!important;font-size:17px!important;line-height:1.68!important;text-align:left!important}
+body .seoActions{justify-content:flex-start!important;gap:9px!important;margin-top:25px!important}
+body .seoPrimary{border:1px solid #b78b31!important;border-radius:6px!important;background:linear-gradient(135deg,#f0c66c,#d5a84a 55%,#9e7320)!important;color:#11140f!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important;padding:10px 14px!important;font-size:10px!important;font-weight:750!important}
+body .seoSecondary{border:1px solid #263639!important;border-radius:6px!important;background:#081216!important;color:#9eabad!important;box-shadow:none!important;padding:10px 14px!important;font-size:10px!important;font-weight:750!important}
+body .seoPrimary:hover{transform:translateY(-1px)!important}
+body .seoSecondary:hover{border-color:rgba(213,168,74,.42)!important;color:#e8ca83!important}
+body .seoCard,body .seoSection,body .seoCta,body .seoFaq article{border:1px solid #203033!important;border-radius:7px!important;background:linear-gradient(145deg,#081216,#071014)!important;box-shadow:0 12px 30px rgba(0,0,0,.16)!important}
+body .seoCard{padding:20px!important}
+body .seoCard h2,body .seoCard h3,body .seoSection h2,body .seoCta h2{color:#edf2ee!important;background:none!important;-webkit-text-fill-color:#edf2ee!important;font-weight:650!important}
+body .seoCard h2 a,body .seoCard h3 a{color:#e4e8e4!important}
+body .seoCard h2 a:hover,body .seoCard h3 a:hover{color:#f0c66c!important}
+body .seoCard p,body .seoSection p,body .seoFaq p,body .seoCta p{color:#7f8f93!important;font-size:13px!important;line-height:1.7!important}
+body .seoSection{max-width:1132px!important;margin:12px auto!important;padding:30px!important}
+body .seoCta{max-width:1132px!important;margin:12px auto!important;padding:38px!important;text-align:left!important;background:radial-gradient(circle at 92% 50%,rgba(17,107,70,.12),transparent 25%),linear-gradient(145deg,#081216,#071014)!important}
+body .seoCta p{margin:0 0 20px!important}
+body .landingModule,body .seoProof div{border:1px solid #203033!important;border-radius:7px!important;background:#071014!important;color:#eef3ef!important}
+body .landingModule a,body .seoProof strong{color:#f0c66c!important}
+body .marketing .gradientText,body .marketing .price{background:linear-gradient(90deg,#f0c66c,#d5a84a 58%,#6ba67c)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
+body .marketing .eyebrow{color:#f0c66c!important}
+body .marketing .button.primary{background:linear-gradient(135deg,#f0c66c,#d5a84a 55%,#9e7320)!important;color:#11140f!important;border:1px solid #b78b31!important;border-radius:6px!important}
+body .marketing .button:not(.primary){background:#081216!important;color:#9eabad!important;border:1px solid #263639!important;border-radius:6px!important}
+body .marketing .demoCard,body .marketing .priceCard,body .marketing .authCard,body .marketing .legalBody{border:1px solid #203033!important;background:linear-gradient(145deg,#081216,#071014)!important;border-radius:7px!important;box-shadow:0 12px 30px rgba(0,0,0,.16)!important}
+body .marketing h1,body .marketing h2,body .marketing h3,body .legalPage h1,body .legalPage h2{color:#eef3ef!important;background:none!important;-webkit-text-fill-color:#eef3ef!important}
+body .marketing p,body .legalPage p{color:#829197!important}
+body .footer,body .leFooter{background:#050c0f!important;border-top:1px solid #172326!important}
+body .footer a,body .leFooter a{color:#7d8c90!important}
+body .footer a:hover,body .leFooter a:hover{color:#f0c66c!important}
+@media(max-width:900px){body .seoHero{padding:58px 20px 34px!important}body .seoHero h1{font-size:clamp(42px,12vw,58px)!important;line-height:1!important}body .seoHero p{font-size:16px!important}body .seoSection,body .seoCta{margin:10px 16px!important;padding:22px!important}body .seoGrid{padding:0 16px!important}body .seoNav{padding:12px 16px!important}body .seoNav div{display:none!important}}
