@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import './globals.css';
 import './executive-theme.css';
 import './executive-pages.css';
 import './public-template-v3.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-538670958';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -92,6 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
+        <GoogleAnalytics measurementId={gaMeasurementId} />
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
