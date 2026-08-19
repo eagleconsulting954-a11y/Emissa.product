@@ -4,9 +4,11 @@ const nav = [
   ['Overview','/admin/compliance','⌂'],
   ['Suppliers','/admin/suppliers','⌘'],
   ['Workflows','/admin/workflows','◇'],
+  ['Corrective Actions','/admin/capa','✓'],
   ['Evidence','/admin/evidence','▣'],
   ['Regulations','/admin/regulations','◎'],
   ['Risk & Analytics','/admin/risk','↗'],
+  ['Communications','/admin/communications','✉'],
   ['AI Copilot','/admin/copilot','✦'],
   ['CRM','/admin/crm','◫'],
 ];
