@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { riskBand, supplierRiskScore } from '@/lib/supplierCompliance';
 import AdminProductShell from '@/components/AdminProductShell';
 import '../compliance/admin-compliance.css';
+import '../product-template.css';
 
 export const dynamic='force-dynamic';
 
