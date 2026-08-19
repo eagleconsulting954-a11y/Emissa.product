@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import AdminProductShell from '@/components/AdminProductShell';
 import '../compliance/admin-compliance.css';
+import '../product-template.css';
 
 export const dynamic='force-dynamic';
 
