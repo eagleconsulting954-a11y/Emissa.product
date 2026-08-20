@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { newBlogPosts } from '@/lib/newBlogContent';
 import { comparisons, docs, integrations, personas, regulations, templates, tools } from '@/lib/seoExpansionContent';
+import { phase2Integrations, phase2Regulations } from '@/lib/seoExpansionPhase2';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
+const allIntegrations={...integrations,...phase2Integrations};
+const allRegulations={...regulations,...phase2Regulations};
 
 const pages = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
@@ -11,12 +14,14 @@ const pages = [
   { path: '/resources', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/integrations', priority: 0.9, changeFrequency: 'weekly' as const },
-  { path: '/regulations', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/regulations', priority: 0.95, changeFrequency: 'weekly' as const },
   { path: '/for', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/compare', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/tools', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/templates', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/docs', priority: 0.85, changeFrequency: 'weekly' as const },
+  { path: '/research', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/research/methodology', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/demo', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/pricing', priority: 0.8, changeFrequency: 'monthly' as const },
 
@@ -64,8 +69,8 @@ const pages = [
 ];
 
 const collectionPages = [
-  ...Object.keys(integrations).map(slug=>({path:`/integrations/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
-  ...Object.keys(regulations).map(slug=>({path:`/regulations/${slug}`,priority:.85,changeFrequency:'monthly' as const})),
+  ...Object.keys(allIntegrations).map(slug=>({path:`/integrations/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(allRegulations).map(slug=>({path:`/regulations/${slug}`,priority:.88,changeFrequency:'monthly' as const})),
   ...Object.keys(personas).map(slug=>({path:`/for/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
   ...Object.keys(comparisons).map(slug=>({path:`/compare/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
   ...Object.keys(tools).map(slug=>({path:`/tools/${slug}`,priority:.85,changeFrequency:'monthly' as const})),
