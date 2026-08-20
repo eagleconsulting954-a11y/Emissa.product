@@ -1,6 +1,17 @@
 const baseUrl=process.env.NEXT_PUBLIC_SITE_URL||process.env.APP_URL||'https://emissa.tech';
 
-function escapeXml(value:string){return value.replace(/[<>&'\"]/g,(char)=>({ '<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','\"':'&quot;' }[char]||char));}
+function escapeXml(value:string){
+  return value.replace(/[<>&'"]/g,(char)=>{
+    switch(char){
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '&': return '&amp;';
+      case "'": return '&apos;';
+      case '"': return '&quot;';
+      default: return char;
+    }
+  });
+}
 
 export function sitemapResponse(paths:string[]){
   const lastmod=new Date().toISOString();
