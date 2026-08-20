@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { newBlogPosts } from '@/lib/newBlogContent';
+import { comparisons, docs, integrations, personas, regulations, templates, tools } from '@/lib/seoExpansionContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
 
@@ -9,6 +10,13 @@ const pages = [
   { path: '/industries', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/resources', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/integrations', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/regulations', priority: 0.9, changeFrequency: 'weekly' as const },
+  { path: '/for', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/compare', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/tools', priority: 0.9, changeFrequency: 'monthly' as const },
+  { path: '/templates', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/docs', priority: 0.85, changeFrequency: 'weekly' as const },
   { path: '/demo', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/pricing', priority: 0.8, changeFrequency: 'monthly' as const },
 
@@ -55,16 +63,17 @@ const pages = [
   { path: '/blog/supplier-compliance-platform-buyers-guide', priority: 0.8, changeFrequency: 'monthly' as const },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const newBlogPages = Object.keys(newBlogPosts).map((slug) => ({
-    path: `/blog/topics/${slug}`,
-    priority: 0.8,
-    changeFrequency: 'monthly' as const,
-  }));
+const collectionPages = [
+  ...Object.keys(integrations).map(slug=>({path:`/integrations/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(regulations).map(slug=>({path:`/regulations/${slug}`,priority:.85,changeFrequency:'monthly' as const})),
+  ...Object.keys(personas).map(slug=>({path:`/for/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(comparisons).map(slug=>({path:`/compare/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(tools).map(slug=>({path:`/tools/${slug}`,priority:.85,changeFrequency:'monthly' as const})),
+  ...Object.keys(templates).map(slug=>({path:`/templates/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(docs).map(slug=>({path:`/docs/${slug}`,priority:.75,changeFrequency:'monthly' as const})),
+];
 
-  return [...pages, ...newBlogPages].map(({ path, priority, changeFrequency }) => ({
-    url: `${baseUrl}${path}`,
-    changeFrequency,
-    priority,
-  }));
+export default function sitemap(): MetadataRoute.Sitemap {
+  const newBlogPages = Object.keys(newBlogPosts).map((slug) => ({ path: `/blog/topics/${slug}`, priority: 0.8, changeFrequency: 'monthly' as const }));
+  return [...pages, ...collectionPages, ...newBlogPages].map(({ path, priority, changeFrequency }) => ({ url: `${baseUrl}${path}`, changeFrequency, priority }));
 }
