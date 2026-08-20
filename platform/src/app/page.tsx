@@ -19,6 +19,16 @@ const features = [
   ['04','Scale with confidence','Give enterprise teams secure infrastructure designed for multi-entity operations and integrations.'],
 ];
 
+const seoClusters = [
+  ['/regulations','Regulatory Intelligence','CBAM, REACH, RoHS, PFAS, EPR and supplier evidence guides grounded in authoritative sources.'],
+  ['/integrations','Integrations','ERP, procurement, accounting, utility, fleet and communication integration workflows.'],
+  ['/for','Teams & Roles','Supplier compliance workflows for procurement, compliance, sustainability, quality, operations, legal and finance.'],
+  ['/compare','Buyer Guides','Compare supplier compliance platforms with spreadsheets, ESG, procurement, GRC, risk and carbon tools.'],
+  ['/tools','Free Tools','Interactive supplier readiness, certificate risk, buyer request and evidence-gap assessments.'],
+  ['/templates','Templates','Supplier questionnaires, evidence matrices, CAPA, CBAM, EPR and due-diligence structures.'],
+  ['/docs','Documentation','Public product documentation for Supplier 360, Evidence Vault, Workflow Studio, CAPA, risk and reporting.'],
+] as const;
+
 export default function MarketingHome() {
   return <main className="landingExact luxuryLanding">
     <LeadMagnet />
@@ -40,6 +50,8 @@ export default function MarketingHome() {
     <section className="leFuture"><div className="sectionIntro"><span>THE OPERATING STANDARD</span><h2>Supplier compliance infrastructure built with discipline.</h2><p>Replace fragmented spreadsheets, folders and point solutions with a controlled system designed for evidence reuse, accountability and scale.</p></div><div className="leFeatureGrid">{features.map(([num,title,description]) => <article className="leFeature" key={title}><div className="featureNumber">{num}</div><h3>{title}</h3><p>{description}</p><div className="featureLine"></div></article>)}</div></section>
 
     <section className="executiveSection"><div className="executiveCopy"><span className="sectionKicker">CONTROL • CLARITY • CONFIDENCE</span><h2>Turn supplier compliance into enterprise infrastructure.</h2><p>Emissa connects every requirement to the evidence, ownership, approval and supplier record behind it—giving leadership a clear view of readiness, risk and execution.</p><a className="leSecondary" href="/solutions">View solution architecture <i>↗</i></a></div><div className="executiveVisual" aria-hidden="true"><div className="goldFrame"><div className="greenCore"></div></div></div></section>
+
+    <section className="leFuture"><div className="sectionIntro"><span>SUPPLIER COMPLIANCE LIBRARY</span><h2>Explore the requirement, system, role and workflow behind supplier compliance.</h2><p>Use Emissa’s growing public knowledge layer to move from research to an operational supplier compliance system.</p></div><div className="leFeatureGrid">{seoClusters.map(([href,title,description],index)=><article className="leFeature" key={href}><div className="featureNumber">{String(index+1).padStart(2,'0')}</div><h3><a href={href}>{title}</a></h3><p>{description}</p><a className="leSecondary" href={href}>Explore {title} <i>↗</i></a><div className="featureLine"></div></article>)}</div></section>
 
     <section className="leCta"><div><span className="sectionKicker">PRIVATE DEMONSTRATION</span><h2>See what a mature supplier compliance system looks like.</h2><p>Explore how Emissa can structure your supplier evidence, workflows and reporting around one premium operating layer.</p></div><div className="leCtaCenter"><a className="lePrimary" href="/demo">Book a private demo <span>→</span></a><div style={{marginTop:16}}><a className="leSecondary" href="/pricing">View founding plan</a></div></div><div className="leCtaVisual" aria-hidden="true"><div className="luxuryMark ctaMark"><span className="markGold"></span><span className="markGreen"></span></div></div></section>
 
