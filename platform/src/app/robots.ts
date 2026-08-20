@@ -20,7 +20,13 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/sitemap-core.xml`,
+      `${baseUrl}/sitemap-regulations.xml`,
+      `${baseUrl}/sitemap-integrations.xml`,
+      `${baseUrl}/sitemap-library.xml`,
+    ],
     host: baseUrl,
   };
 }
