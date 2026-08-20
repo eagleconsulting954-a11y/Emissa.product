@@ -1,14 +1,26 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { AssessmentTool as AssessmentToolContent } from '@/lib/seoExpansionContent';
 
 export default function AssessmentTool({ tool }:{ tool:AssessmentToolContent }) {
   const [answers,setAnswers] = useState<Record<number,boolean>>({});
+  const trackedComplete=useRef(false);
   const answered = Object.keys(answers).length;
   const yes = Object.values(answers).filter(Boolean).length;
   const score = useMemo(() => tool.questions.length ? Math.round((yes/tool.questions.length)*100) : 0,[yes,tool.questions.length]);
   const result = score < 50 ? tool.low : score < 80 ? tool.medium : tool.high;
+
+  useEffect(()=>{
+    if(answered!==tool.questions.length||trackedComplete.current||typeof window==='undefined')return;
+    trackedComplete.current=true;
+    window.gtag?.('event','seo_tool_complete',{
+      tool_name:tool.title,
+      score,
+      page_path:window.location.pathname,
+    });
+  },[answered,score,tool.questions.length,tool.title]);
+
   return <section className="seoSection">
     <span className="seoKicker">Interactive assessment</span>
     <h2>Score your current operating model.</h2>
