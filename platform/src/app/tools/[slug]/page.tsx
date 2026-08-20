@@ -1,0 +1,10 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import AssessmentTool from '@/components/AssessmentTool';
+import { tools } from '@/lib/seoExpansionContent';
+import '../../seo.css';
+
+type Slug=keyof typeof tools;
+export function generateStaticParams(){return Object.keys(tools).map(slug=>({slug}));}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const tool=tools[slug as Slug];if(!tool)return{};return{title:tool.title,description:tool.description,keywords:tool.keywords,alternates:{canonical:`/tools/${slug}`},robots:{index:true,follow:true}};}
+export default async function ToolPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const tool=tools[slug as Slug];if(!tool)notFound();const faqSchema={'@context':'https://schema.org','@type':'FAQPage',mainEntity:tool.faq.map(([q,a])=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))};return <main className="seoPage"><nav className="seoNav"><a className="seoBrand" href="/">EMISSA</a><div><a href="/solutions">Solutions</a><a href="/regulations">Regulations</a><a href="/templates">Templates</a><a href="/docs">Docs</a><a href="/demo">Demo</a></div></nav><header className="seoHero compact"><span className="seoKicker">Free Supplier Compliance Tool</span><h1>{tool.h1}</h1><p>{tool.intro}</p></header><AssessmentTool tool={tool}/>{tool.sections.map(section=><section className="seoSection" key={section.title}><h2>{section.title}</h2><p>{section.body}</p></section>)}<section className="seoSection"><h2>Frequently asked questions</h2><div className="seoFaq">{tool.faq.map(([q,a])=><article key={q}><h3>{q}</h3><p>{a}</p></article>)}</div></section><section className="seoCta"><h2>Turn the score into assigned work.</h2><p>Emissa converts evidence gaps, supplier requirements and exceptions into controlled workflows with owners and audit history.</p><a className="seoPrimary" href="/demo">Book a private demo</a></section><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(faqSchema)}}/></main>}
