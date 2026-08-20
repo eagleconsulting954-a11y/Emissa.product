@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import AnalyticsEvents from '@/components/AnalyticsEvents';
 import './globals.css';
 import './executive-theme.css';
 import './executive-pages.css';
@@ -91,6 +92,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     description: 'Supplier compliance infrastructure for manufacturers, exporters and enterprise suppliers.',
   };
 
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Emissa',
+    url: siteUrl,
+    description: 'Supplier compliance infrastructure, regulatory intelligence, templates, tools and implementation guidance.',
+  };
+
   return (
     <html lang="en">
       <head>
@@ -109,9 +118,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <GoogleAnalytics measurementId={gaMeasurementId} />
+        <AnalyticsEvents />
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       </body>
     </html>
   );
