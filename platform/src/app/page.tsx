@@ -20,13 +20,21 @@ const features = [
 ];
 
 const seoClusters = [
-  ['/regulations','Regulatory Intelligence','CBAM, REACH, RoHS, PFAS, EPR and supplier evidence guides grounded in authoritative sources.'],
-  ['/integrations','Integrations','ERP, procurement, accounting, utility, fleet and communication integration workflows.'],
+  ['/regulations','Regulatory Intelligence','CBAM, EUDR, CSDDD, Digital Product Passports, REACH, RoHS, PFAS, UFLPA, EPR and product compliance guidance.'],
+  ['/integrations','Integrations','ERP, procurement, accounting, utility, fleet, data-platform and collaboration integration workflows.'],
   ['/for','Teams & Roles','Supplier compliance workflows for procurement, compliance, sustainability, quality, operations, legal and finance.'],
   ['/compare','Buyer Guides','Compare supplier compliance platforms with spreadsheets, ESG, procurement, GRC, risk and carbon tools.'],
   ['/tools','Free Tools','Interactive supplier readiness, certificate risk, buyer request and evidence-gap assessments.'],
   ['/templates','Templates','Supplier questionnaires, evidence matrices, CAPA, CBAM, EPR and due-diligence structures.'],
   ['/docs','Documentation','Public product documentation for Supplier 360, Evidence Vault, Workflow Studio, CAPA, risk and reporting.'],
+  ['/research','Research & Benchmarks','Transparent supplier compliance benchmark definitions for evidence readiness, response performance, CAPA and data reuse.'],
+] as const;
+
+const regulatorySpotlights = [
+  ['/regulations/espr-digital-product-passport','Digital Product Passport','Product, supplier, material and evidence data architecture for ESPR and DPP workflows.'],
+  ['/regulations/eudr','EUDR','Supplier due diligence, commodity traceability, origin evidence and EU Information System readiness.'],
+  ['/regulations/csddd','CSDDD','Value-chain due diligence evidence, risk review, remediation and accountability workflows.'],
+  ['/regulations/uflpa','UFLPA','Supplier traceability, manufacturing evidence and import-compliance documentation.'],
 ] as const;
 
 export default function MarketingHome() {
@@ -34,7 +42,7 @@ export default function MarketingHome() {
     <LeadMagnet />
     <nav className="leNav">
       <a className="leBrand" href="/" aria-label="Emissa home"><div className="leLogo luxuryMark" aria-hidden="true"><span className="markGold"></span><span className="markGreen"></span></div><div><b>EMISSA</b><small>Supplier Compliance Infrastructure</small></div></a>
-      <div className="leNavLinks"><a href="#platform">Platform</a><a href="/solutions">Solutions</a><a href="/regulations">Regulations</a><a href="/integrations">Integrations</a><a href="/resources">Resources</a><a className="login" href="/login">Log in</a><a className="demo" href="/demo">Book a private demo</a></div>
+      <div className="leNavLinks"><a href="#platform">Platform</a><a href="/solutions">Solutions</a><a href="/regulations">Regulations</a><a href="/integrations">Integrations</a><a href="/research">Research</a><a className="login" href="/login">Log in</a><a className="demo" href="/demo">Book a private demo</a></div>
     </nav>
 
     <section className="leHero" id="platform">
@@ -51,6 +59,8 @@ export default function MarketingHome() {
 
     <section className="executiveSection"><div className="executiveCopy"><span className="sectionKicker">CONTROL • CLARITY • CONFIDENCE</span><h2>Turn supplier compliance into enterprise infrastructure.</h2><p>Emissa connects every requirement to the evidence, ownership, approval and supplier record behind it—giving leadership a clear view of readiness, risk and execution.</p><a className="leSecondary" href="/solutions">View solution architecture <i>↗</i></a></div><div className="executiveVisual" aria-hidden="true"><div className="goldFrame"><div className="greenCore"></div></div></div></section>
 
+    <section className="leFuture"><div className="sectionIntro"><span>REGULATORY INTELLIGENCE</span><h2>Build operational readiness around the regulations changing supplier data.</h2><p>Use source-grounded guides to connect regulatory research to the supplier, product, facility, evidence and workflow records required to execute.</p></div><div className="leFeatureGrid">{regulatorySpotlights.map(([href,title,description],index)=><article className="leFeature" key={href}><div className="featureNumber">R{index+1}</div><h3><a href={href}>{title}</a></h3><p>{description}</p><a className="leSecondary" href={href}>Open guide <i>↗</i></a><div className="featureLine"></div></article>)}</div></section>
+
     <section className="leFuture"><div className="sectionIntro"><span>SUPPLIER COMPLIANCE LIBRARY</span><h2>Explore the requirement, system, role and workflow behind supplier compliance.</h2><p>Use Emissa’s growing public knowledge layer to move from research to an operational supplier compliance system.</p></div><div className="leFeatureGrid">{seoClusters.map(([href,title,description],index)=><article className="leFeature" key={href}><div className="featureNumber">{String(index+1).padStart(2,'0')}</div><h3><a href={href}>{title}</a></h3><p>{description}</p><a className="leSecondary" href={href}>Explore {title} <i>↗</i></a><div className="featureLine"></div></article>)}</div></section>
 
     <section className="leCta"><div><span className="sectionKicker">PRIVATE DEMONSTRATION</span><h2>See what a mature supplier compliance system looks like.</h2><p>Explore how Emissa can structure your supplier evidence, workflows and reporting around one premium operating layer.</p></div><div className="leCtaCenter"><a className="lePrimary" href="/demo">Book a private demo <span>→</span></a><div style={{marginTop:16}}><a className="leSecondary" href="/pricing">View founding plan</a></div></div><div className="leCtaVisual" aria-hidden="true"><div className="luxuryMark ctaMark"><span className="markGold"></span><span className="markGreen"></span></div></div></section>
@@ -59,9 +69,9 @@ export default function MarketingHome() {
       <div><a className="leBrand" href="/"><div className="leLogo luxuryMark"><span className="markGold"></span><span className="markGreen"></span></div><div><b>EMISSA</b><small>Supplier Compliance Infrastructure</small></div></a></div>
       <div><h4>Platform</h4><a href="/solutions/supplier-compliance-infrastructure">Overview</a><a href="/integrations">Integrations</a><a href="/docs">Documentation</a><a href="/pricing">Pricing</a><a href="/demo">Demo</a></div>
       <div><h4>Solutions</h4><a href="/solutions/supplier-due-diligence">Due Diligence</a><a href="/solutions/buyer-compliance-requests">Buyer Requests</a><a href="/solutions/supplier-evidence-management">Evidence</a><a href="/regulations">Regulatory Intelligence</a><a href="/tools">Compliance Tools</a></div>
-      <div><h4>Resources</h4><a href="/resources">Guides</a><a href="/blog">Insights</a><a href="/templates">Templates</a><a href="/compare">Buyer Guides & Comparisons</a><a href="/resources/supplier-compliance-guide">Supplier Compliance Guide</a></div>
+      <div><h4>Resources</h4><a href="/resources">Guides</a><a href="/blog">Insights</a><a href="/templates">Templates</a><a href="/compare">Buyer Guides & Comparisons</a><a href="/research">Research & Benchmarks</a></div>
       <div><h4>Industries & Teams</h4><a href="/industries/manufacturing-supplier-compliance">Manufacturing</a><a href="/industries/automotive-supplier-compliance">Automotive</a><a href="/industries/packaging-epr-compliance">Packaging</a><a href="/industries/metals-cbam-compliance">Metals</a><a href="/for">Teams & Roles</a></div>
-      <div><h4>Emissa</h4><p>Premium supplier compliance infrastructure for organizations that value control, clarity and scale.</p><a href="/regulations/cbam">CBAM Guide</a><a href="/regulations/reach-svhc">REACH / SVHC Guide</a><a className="leSecondary" href="/demo">Book a private demo</a></div>
+      <div><h4>Regulations</h4><a href="/regulations/espr-digital-product-passport">Digital Product Passport</a><a href="/regulations/eudr">EUDR</a><a href="/regulations/csddd">CSDDD</a><a href="/regulations/uflpa">UFLPA</a><a className="leSecondary" href="/regulations">View regulatory library</a></div>
       <div className="leLegal"><span>© 2026 Emissa Technologies, Inc. All rights reserved.</span><div className="leLegalLinks"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></div>
     </footer>
   </main>;
