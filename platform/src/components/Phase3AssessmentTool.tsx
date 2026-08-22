@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Phase3Tool } from '@/lib/seoExpansionPhase3';
 
 type GtagWindow=Window&{gtag?:(...args:unknown[])=>void};
@@ -14,11 +14,12 @@ export default function Phase3AssessmentTool({tool,slug}:{tool:Phase3Tool;slug:s
   const result=score<50?tool.low:score<80?tool.medium:tool.high;
   const complete=answered===tool.questions.length;
 
-  if(complete&&!sent&&typeof window!=='undefined'){
+  useEffect(()=>{
+    if(!complete||sent||typeof window==='undefined')return;
     const gtag=(window as GtagWindow).gtag;
     gtag?.('event','seo_assessment_complete',{tool_slug:slug,score,source_path:window.location.pathname});
     setSent(true);
-  }
+  },[complete,score,sent,slug]);
 
   return <section className="seoSection">
     <span className="seoKicker">Interactive assessment</span>
