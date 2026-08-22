@@ -4,6 +4,9 @@ export const dynamic='force-static';
 
 const paths=[
   '/',
+  '/platform',
+  '/software',
+  '/product-compliance',
   '/solutions',
   '/solutions/supplier-compliance-infrastructure',
   '/solutions/supplier-due-diligence',
@@ -25,6 +28,15 @@ const paths=[
   '/industries/industrial-supplier-compliance',
   '/industries/packaging-epr-compliance',
   '/industries/metals-cbam-compliance',
+  '/regulations',
+  '/regulatory-calendar',
+  '/integrations',
+  '/compare',
+  '/tools',
+  '/templates',
+  '/research',
+  '/research/state-of-supplier-compliance',
+  '/research/methodology',
   '/pricing',
   '/demo',
 ];
