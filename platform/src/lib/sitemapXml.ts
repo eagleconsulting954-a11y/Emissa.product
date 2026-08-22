@@ -13,8 +13,14 @@ function escapeXml(value:string){
   });
 }
 
+/**
+ * Do not emit a synthetic lastmod timestamp for every URL on every build.
+ * Search engines should only receive lastmod when it reflects a meaningful
+ * content change, so these section sitemaps intentionally omit it until
+ * per-page review timestamps are tracked in content metadata.
+ */
 export function sitemapResponse(paths:string[]){
-  const lastmod=new Date().toISOString();
-  const body=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map(path=>`  <url><loc>${escapeXml(`${baseUrl}${path}`)}</loc><lastmod>${lastmod}</lastmod></url>`).join('\n')}\n</urlset>`;
+  const uniquePaths=[...new Set(paths)];
+  const body=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniquePaths.map(path=>`  <url><loc>${escapeXml(`${baseUrl}${path}`)}</loc></url>`).join('\n')}\n</urlset>`;
   return new Response(body,{headers:{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=3600, s-maxage=3600'}});
 }
