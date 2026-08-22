@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: { bodySizeLimit: '10mb' },
   },
+  redirects: async () => [
+    {
+      source: '/:path*',
+      has: [{ type: 'host', value: 'www.emissa.tech' }],
+      destination: 'https://emissa.tech/:path*',
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: '/(.*)',
