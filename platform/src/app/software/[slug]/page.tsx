@@ -1,0 +1,10 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import SeoExpansionPage from '@/components/SeoExpansionPage';
+import { commercialPages } from '@/lib/seoExpansionPhase3';
+import '../../seo.css';
+
+type Slug=keyof typeof commercialPages;
+export function generateStaticParams(){return Object.keys(commercialPages).map(slug=>({slug}));}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const entry=commercialPages[slug as Slug];if(!entry)return{};return{title:entry.title,description:entry.description,keywords:entry.keywords,alternates:{canonical:`/software/${slug}`},robots:{index:true,follow:true}};}
+export default async function SoftwarePage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const entry=commercialPages[slug as Slug];if(!entry)notFound();return <SeoExpansionPage entry={entry} hubPath="/software" hubLabel="Supplier Compliance Software"/>;}
