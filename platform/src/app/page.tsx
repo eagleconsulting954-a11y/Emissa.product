@@ -5,10 +5,10 @@ import './landing.css';
 
 export const metadata: Metadata = {
   title: 'Supplier Compliance Infrastructure Software',
-  description: 'Premium supplier compliance infrastructure for manufacturers and enterprise suppliers. Centralize evidence, automate due diligence, buyer requests, Scope 3, EPR, CBAM and product compliance workflows.',
+  description: 'Supplier compliance software for manufacturers: centralize supplier evidence, due diligence, buyer requests, product compliance, EPR, CBAM and Scope 3 workflows.',
   keywords: ['supplier compliance infrastructure','supplier compliance software','supplier compliance management software','supplier compliance platform','supplier due diligence software','supplier evidence management','enterprise supplier compliance'],
   alternates: { canonical: '/' },
-  openGraph: { title: 'Emissa | Supplier Compliance Infrastructure', description: 'One refined operating system for supplier evidence, buyer requirements, due diligence and regulatory compliance workflows.', url: '/', type: 'website' },
+  openGraph: { title: 'Emissa | Supplier Compliance Infrastructure', description: 'One operating system for supplier evidence, buyer requirements, due diligence and regulatory compliance workflows.', url: '/', type: 'website' },
   robots: { index: true, follow: true },
 };
 
@@ -49,7 +49,7 @@ export default function MarketingHome() {
 
     <section className="leHero" id="platform">
       <div className="heroEtching" aria-hidden="true"></div>
-      <div className="leHeroCopy"><p className="eyebrow">Supplier Compliance Infrastructure</p><h1>Compliance,<br/><span className="leGradient">elevated.</span></h1><p className="leLead">A sophisticated operating layer for supplier evidence, buyer requirements, due diligence and regulatory workflows.</p><div className="leActions"><a className="lePrimary" href="/demo">Book a private demo <span>→</span></a><a className="leSecondary" href="/platform">Explore the platform <i>↗</i></a></div><div className="leTrusted"><span>✓</span> Built for mature compliance programs and complex supply chains</div></div>
+      <div className="leHeroCopy"><p className="eyebrow">Supplier Compliance Infrastructure</p><h1>Supplier compliance,<br/><span className="leGradient">elevated.</span></h1><p className="leLead">A sophisticated operating layer for supplier evidence, buyer requirements, due diligence and regulatory workflows.</p><div className="leActions"><a className="lePrimary" href="/demo">Book a private demo <span>→</span></a><a className="leSecondary" href="/platform">Explore the platform <i>↗</i></a></div><div className="leTrusted"><span>✓</span> Built for mature compliance programs and complex supply chains</div></div>
       <div className="leVisual" aria-hidden="true"><div className="leGlow"></div><div className="luxuryHalo haloOne"></div><div className="luxuryHalo haloTwo"></div><div className="leTrail"></div><div className="leOrbit"></div><div className="leOrbit o2"></div><div className="leOrbit o3"></div><div className="leGlobe"><div className="globeMonogram"><span className="markGold"></span><span className="markGreen"></span></div></div><div className="leParticles"></div></div>
     </section>
 
