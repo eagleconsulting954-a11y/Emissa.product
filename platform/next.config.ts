@@ -13,6 +13,21 @@ const nextConfig: NextConfig = {
       destination: 'https://emissa.tech/:path*',
       permanent: true,
     },
+    {
+      source: '/get-started',
+      destination: '/demo',
+      permanent: true,
+    },
+    {
+      source: '/blog/emissa-vs-watershed',
+      destination: '/compare/emissa-vs-watershed',
+      permanent: true,
+    },
+    {
+      source: '/blog/walmart-project-gigaton-requirements-2026',
+      destination: '/resources/scope-3-supplier-data-guide',
+      permanent: true,
+    },
   ],
   headers: async () => [
     {
