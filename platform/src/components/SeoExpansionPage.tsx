@@ -1,22 +1,15 @@
 import type { SeoEntry } from '@/lib/seoExpansionContent';
 
-const clusters=[['Integrations','/integrations'],['Regulations','/regulations'],['Teams','/for'],['Comparisons','/compare'],['Tools','/tools'],['Templates','/templates'],['Documentation','/docs'],['Research','/research']];
+const clusters=[['Platform','/platform'],['Software','/software'],['Product Compliance','/product-compliance'],['Integrations','/integrations'],['Regulations','/regulations'],['Teams','/for'],['Comparisons','/compare'],['Tools','/tools'],['Templates','/templates'],['Documentation','/docs'],['Research','/research'],['Regulatory Calendar','/regulatory-calendar']];
 
 export default function SeoExpansionPage({ entry, hubPath, hubLabel, downloadHref }:{ entry:SeoEntry; hubPath:string; hubLabel:string; downloadHref?:string }) {
   const faqSchema = { '@context':'https://schema.org', '@type':'FAQPage', mainEntity: entry.faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } })) };
   const breadcrumb = { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:[{ '@type':'ListItem', position:1, name:'Home', item:'https://emissa.tech/' },{ '@type':'ListItem', position:2, name:hubLabel, item:`https://emissa.tech${hubPath}` },{ '@type':'ListItem', position:3, name:entry.h1 }]};
   const articleSchema={
-    '@context':'https://schema.org',
-    '@type':'Article',
-    headline:entry.h1,
-    description:entry.description,
-    dateModified:'2026-08-19',
-    author:{'@type':'Organization',name:'Emissa',url:'https://emissa.tech/'},
-    publisher:{'@type':'Organization',name:'Emissa',url:'https://emissa.tech/'},
-    about:entry.keywords.map(name=>({'@type':'Thing',name})),
+    '@context':'https://schema.org','@type':'Article',headline:entry.h1,description:entry.description,dateModified:'2026-08-22',author:{'@type':'Organization',name:'Emissa',url:'https://emissa.tech/'},publisher:{'@type':'Organization',name:'Emissa',url:'https://emissa.tech/'},about:entry.keywords.map(name=>({'@type':'Thing',name})),mainEntityOfPage:`https://emissa.tech${hubPath}`,
   };
   return <main className="seoPage">
-    <nav className="seoNav"><a className="seoBrand" href="/">EMISSA</a><div><a href="/solutions">Solutions</a><a href="/regulations">Regulations</a><a href="/integrations">Integrations</a><a href="/tools">Tools</a><a href="/research">Research</a><a href="/demo">Demo</a></div></nav>
+    <nav className="seoNav"><a className="seoBrand" href="/">EMISSA</a><div><a href="/platform">Platform</a><a href="/software">Software</a><a href="/regulations">Regulations</a><a href="/product-compliance">Product Compliance</a><a href="/tools">Tools</a><a href="/research">Research</a><a href="/demo">Demo</a></div></nav>
     <article>
       <header className="seoHero compact"><span className="seoKicker">{hubLabel}</span><h1>{entry.h1}</h1><p>{entry.intro}</p><div className="seoActions"><a className="seoPrimary" href="/demo">Book a private demo</a>{downloadHref&&<a className="seoPrimary" href={downloadHref}>Download template ↓</a>}<a className="seoSecondary" href={hubPath}>Explore {hubLabel}</a></div></header>
       {entry.note && <section className="seoGrid"><article className="seoCard"><span className="seoKicker">Important</span><p>{entry.note}</p></article></section>}
