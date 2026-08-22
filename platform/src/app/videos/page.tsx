@@ -1,0 +1,7 @@
+import type { Metadata } from 'next';
+import { productVideos } from '@/lib/videoLibrary';
+import '../seo.css';
+
+export const metadata:Metadata={title:'Emissa Product Videos',description:'Product video library infrastructure for Emissa supplier compliance modules and workflows.',alternates:{canonical:'/videos'},robots:{index:Object.keys(productVideos).length>0,follow:true}};
+
+export default function VideosPage(){const videos=Object.entries(productVideos);return <main className="seoPage"><nav className="seoNav"><a className="seoBrand" href="/">EMISSA</a><div><a href="/platform">Platform</a><a href="/docs">Docs</a><a href="/resources">Resources</a><a href="/demo">Demo</a></div></nav><header className="seoHero compact"><span className="seoKicker">Product Videos</span><h1>Emissa Product Video Library</h1><p>Only real published product videos are added to this library. Video pages will include transcripts, related modules and VideoObject structured data when source media exists.</p></header>{videos.length>0?<section className="seoGrid three">{videos.map(([slug,video])=><article className="seoCard" key={slug}><h2><a href={`/videos/${slug}`}>{video.title}</a></h2><p>{video.description}</p><a className="seoSecondary" href={`/videos/${slug}`}>Watch →</a></article>)}</section>:<section className="seoSection"><h2>Video SEO infrastructure is ready.</h2><p>No synthetic video pages are published. Add the first real Emissa product recording with its thumbnail, upload date, transcript and embed URL to make the library indexable.</p></section>}</main>;}
