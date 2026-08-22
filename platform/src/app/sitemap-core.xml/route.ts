@@ -37,6 +37,8 @@ const paths=[
   '/research',
   '/research/state-of-supplier-compliance',
   '/research/methodology',
+  '/security',
+  '/about/editorial-policy',
   '/pricing',
   '/demo',
 ];
