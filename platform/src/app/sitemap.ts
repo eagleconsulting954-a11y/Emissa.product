@@ -2,26 +2,37 @@ import type { MetadataRoute } from 'next';
 import { newBlogPosts } from '@/lib/newBlogContent';
 import { comparisons, docs, integrations, personas, regulations, templates, tools } from '@/lib/seoExpansionContent';
 import { phase2Integrations, phase2Regulations } from '@/lib/seoExpansionPhase2';
+import { commercialPages, phase3Regulations, phase3Templates, phase3Tools, platformPages } from '@/lib/seoExpansionPhase3';
+import { phase3MoreRegulations } from '@/lib/seoExpansionPhase3RegMore';
+import { phase3Comparisons } from '@/lib/seoExpansionPhase3Comparisons';
+import { productCompliancePages } from '@/lib/productComplianceContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.APP_URL || 'https://emissa.tech';
 const allIntegrations={...integrations,...phase2Integrations};
-const allRegulations={...regulations,...phase2Regulations};
+const allRegulations={...regulations,...phase2Regulations,...phase3Regulations,...phase3MoreRegulations};
+const allComparisons={...comparisons,...phase3Comparisons};
+const allTemplates={...templates,...phase3Templates};
 
 const pages = [
   { path: '', priority: 1, changeFrequency: 'weekly' as const },
+  { path: '/platform', priority: 0.97, changeFrequency: 'weekly' as const },
+  { path: '/software', priority: 0.97, changeFrequency: 'weekly' as const },
+  { path: '/product-compliance', priority: 0.94, changeFrequency: 'weekly' as const },
   { path: '/solutions', priority: 0.95, changeFrequency: 'weekly' as const },
   { path: '/industries', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/resources', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/blog', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/integrations', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/regulations', priority: 0.95, changeFrequency: 'weekly' as const },
+  { path: '/regulatory-calendar', priority: 0.9, changeFrequency: 'weekly' as const },
   { path: '/for', priority: 0.85, changeFrequency: 'monthly' as const },
-  { path: '/compare', priority: 0.85, changeFrequency: 'monthly' as const },
-  { path: '/tools', priority: 0.9, changeFrequency: 'monthly' as const },
-  { path: '/templates', priority: 0.85, changeFrequency: 'monthly' as const },
+  { path: '/compare', priority: 0.9, changeFrequency: 'monthly' as const },
+  { path: '/tools', priority: 0.92, changeFrequency: 'monthly' as const },
+  { path: '/templates', priority: 0.9, changeFrequency: 'monthly' as const },
   { path: '/docs', priority: 0.85, changeFrequency: 'weekly' as const },
-  { path: '/research', priority: 0.85, changeFrequency: 'monthly' as const },
-  { path: '/research/methodology', priority: 0.8, changeFrequency: 'monthly' as const },
+  { path: '/research', priority: 0.87, changeFrequency: 'monthly' as const },
+  { path: '/research/methodology', priority: 0.82, changeFrequency: 'monthly' as const },
+  { path: '/research/state-of-supplier-compliance', priority: 0.85, changeFrequency: 'monthly' as const },
   { path: '/demo', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/pricing', priority: 0.8, changeFrequency: 'monthly' as const },
 
@@ -69,12 +80,16 @@ const pages = [
 ];
 
 const collectionPages = [
+  ...Object.keys(platformPages).map(slug=>({path:`/platform/${slug}`,priority:.9,changeFrequency:'monthly' as const})),
+  ...Object.keys(commercialPages).map(slug=>({path:`/software/${slug}`,priority:.92,changeFrequency:'monthly' as const})),
+  ...Object.keys(productCompliancePages).map(slug=>({path:`/product-compliance/${slug}`,priority:.88,changeFrequency:'monthly' as const})),
   ...Object.keys(allIntegrations).map(slug=>({path:`/integrations/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
   ...Object.keys(allRegulations).map(slug=>({path:`/regulations/${slug}`,priority:.88,changeFrequency:'monthly' as const})),
   ...Object.keys(personas).map(slug=>({path:`/for/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
-  ...Object.keys(comparisons).map(slug=>({path:`/compare/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(allComparisons).map(slug=>({path:`/compare/${slug}`,priority:.84,changeFrequency:'monthly' as const})),
   ...Object.keys(tools).map(slug=>({path:`/tools/${slug}`,priority:.85,changeFrequency:'monthly' as const})),
-  ...Object.keys(templates).map(slug=>({path:`/templates/${slug}`,priority:.8,changeFrequency:'monthly' as const})),
+  ...Object.keys(phase3Tools).map(slug=>({path:`/tools/${slug}`,priority:.9,changeFrequency:'monthly' as const})),
+  ...Object.keys(allTemplates).map(slug=>({path:`/templates/${slug}`,priority:.82,changeFrequency:'monthly' as const})),
   ...Object.keys(docs).map(slug=>({path:`/docs/${slug}`,priority:.75,changeFrequency:'monthly' as const})),
 ];
 
