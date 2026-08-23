@@ -21,13 +21,12 @@ function inferCategory(slug:string):BlogCategorySlug{
 
 const legacy:Record<string,BlogCatalogPost>=Object.fromEntries(Object.entries(newBlogPosts).map(([slug,p])=>{
   const post=p as {title:string;description:string;keywords:readonly string[];magnet:readonly [string,string,string];sections:readonly (readonly [string,string])[]};
-  return [slug,{
-    title:post.title,description:post.description,category:inferCategory(slug),keywords:[...post.keywords],published:'2026-08-01',updated:'2026-08-22',readTime:6,
-    magnet:[post.magnet[0],post.magnet[1],post.magnet[2]],sections:post.sections.map(([a,b])=>[a,b] as [string,string]),faq:[],related:[]
-  }];
+  return [slug,{title:post.title,description:post.description,category:inferCategory(slug),keywords:[...post.keywords],published:'2026-08-01',updated:'2026-08-22',readTime:6,magnet:[post.magnet[0],post.magnet[1],post.magnet[2]],sections:post.sections.map(([a,b])=>[a,b] as [string,string]),faq:[],related:[]}];
 }));
 
-export const allBlogTopicPosts:Record<string,BlogCatalogPost>={...legacy,...blogV2Posts};
+const v2:Record<string,BlogCatalogPost>=Object.fromEntries(Object.entries(blogV2Posts).map(([slug,post])=>[slug,{...post,faq:post.faq??[]}])) as Record<string,BlogCatalogPost>;
+
+export const allBlogTopicPosts:Record<string,BlogCatalogPost>={...legacy,...v2};
 export { blogCategories };
 export type { BlogCategorySlug } from './blogV2Content';
 
