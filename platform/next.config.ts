@@ -8,12 +8,6 @@ const nextConfig: NextConfig = {
   },
   redirects: async () => [
     {
-      source: '/:path*',
-      has: [{ type: 'host', value: 'www.emissa.tech' }],
-      destination: 'https://emissa.tech/:path*',
-      permanent: true,
-    },
-    {
       source: '/get-started',
       destination: '/demo',
       permanent: true,
