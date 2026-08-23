@@ -1,4 +1,4 @@
-// Deployment trigger: 2026-08-22
+// Deployment trigger: 2026-08-23 11:25 ET
 import type { Metadata } from 'next';
 import LeadMagnet from '@/components/LeadMagnet';
 import './marketing.css';
